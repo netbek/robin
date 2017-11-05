@@ -1,0 +1,15 @@
+bower_components
+node_modules
+npm-debug.log
+yarn-error.log
+
+# IDE files
+nbproject
+.idea
+.netbeans.xml
+
+# Dist
+/dist/
+
+# GH pages
+.publish
