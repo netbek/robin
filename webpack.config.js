@@ -28,6 +28,7 @@ module.exports = {
     jquery: 'jQuery',
     lodash: '_',
     moment: 'moment',
+    papaparse: 'Papa',
     react: 'React',
     'react-addons-transition-group': 'React.addons.TransitionGroup',
     'react-addons-update': 'React.addons.update',

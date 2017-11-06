@@ -13,6 +13,7 @@
     "$": true,
     "jQuery": true,
     "moment": true,
+    "Papa": true,
     "Promise": true,
     "React": true,
     "ReactDOM": true,
