@@ -11,22 +11,22 @@
 // var file = fs.readFileSync(src, {encoding: 'binary'});
 // var parsed = Papa.parse(file, {header: true, skipEmptyLines: true});
 //
-// var rows = parsed.data;
-// var cols = rows.length ? _.keys(rows[0]).slice(1) : [];
-// var cleanCols = cols.map(function(key) {
+// var data = parsed.data;
+// var fieldNames = data.length ? _.keys(data[0]).slice(1) : [];
+// var formattedFieldNames = fieldNames.map(function(key) {
 //   return _.camelCase(key);
 // });
-// var cleanRows = rows.map(function(row) {
+// var result = data.map(function(row) {
 //   return _.zipObject(
-//     cleanCols,
-//     cols.map(function(key) {
+//     formattedFieldNames,
+//     fieldNames.map(function(key) {
 //       return key === 'Species' ? row[key] : Number(row[key]);
 //     })
 //   );
 // });
 //
 // module.exports = {
-//   iris: cleanRows
+//   iris: result
 // };
 
 module.exports = {};
