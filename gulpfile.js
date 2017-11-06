@@ -63,7 +63,7 @@ nunjucks.configure({
 // Parses `view` argument.
 var argv = require('yargs').option('vw', {
   alias: 'view',
-  default: 'RobinExampleView',
+  default: 'HelloWorldView',
   type: 'string'
 }).argv;
 
