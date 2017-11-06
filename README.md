@@ -14,13 +14,33 @@ Dataviz sandbox with D3, React, and R datasets.
 
 ## Usage
 
-1. Build the app and open in a web browser:
+1. Build a view and open in a web browser:
 
   ```
-  gulp livereload
+  gulp --view [View]
   ```
+
+  Views are stored in `/src/views`. Replace `[View]` in the aforementioned command with any directory name.
 
 2. Enable the LiveReload extension in the web browser.
+
+## Editors
+
+### Atom
+
+Available for macOS, Linux, and Microsoft Windows. Open source.
+
+Download from [atom.io](https://atom.io).
+
+Plugins can be installed from the command line. To install a few useful ones:
+
+  ```
+  apm install atom-typescript docblockr double-click-tree-view js-refactor language-nunjucks linter linter-eslint linter-htmlhint linter-sass-lint minimap minimap-autohide minimap-git-diff prettier-atom react refactor
+  ```
+
+### VS Code
+
+### Sublime Text 3
 
 ## License
 
