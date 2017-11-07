@@ -3,7 +3,7 @@ import React from 'react';
 // import loadAndParse from '../utils/jqLoadAndParse';
 import loadAndParse from '../utils/papaLoadAndParse';
 
-class DataTable extends React.Component {
+class Dashboard extends React.Component {
   componentDidMount() {
     const url = '/node_modules/rdatasets/csv/datasets/iris.csv';
 
@@ -42,4 +42,4 @@ class DataTable extends React.Component {
   }
 }
 
-export default DataTable;
+export default Dashboard;
