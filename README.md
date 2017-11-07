@@ -35,7 +35,7 @@ Download from [atom.io](https://atom.io).
 Plugins can be installed from the command line. To install a few useful ones:
 
   ```
-  apm install atom-typescript docblockr double-click-tree-view js-refactor language-nunjucks linter linter-eslint linter-htmlhint linter-sass-lint minimap minimap-autohide minimap-git-diff prettier-atom react refactor
+  apm install atom-jinja2 atom-typescript chary-tree-view docblockr editorconfig git-control highlight-selected js-refactor language-mediawiki language-nunjucks linter linter-eslint linter-htmlhint linter-js-yaml linter-markdown linter-remark linter-sass-lint minimap minimap-autohide minimap-git-diff prettier-atom react refactor
   ```
 
 ### VS Code
