@@ -4,10 +4,11 @@ import React from 'react';
 import RobinChart from 'Robin/js/components/RobinChart';
 import theme from '../../../../js/theme';
 import {extent as d3Extent} from 'd3-array';
-import {scaleQuantize as d3ScaleQuantize} from 'd3-scale';
-
+import {
+  scaleLinear as d3ScaleLinear,
+  scaleQuantize as d3ScaleQuantize
+} from 'd3-scale';
 import {schemeYlGn as d3SchemeYlGn} from 'd3-scale-chromatic';
-
 import {first, last} from 'lodash';
 import moment from 'moment';
 import {
@@ -106,9 +107,22 @@ class RobinExample extends React.Component {
       'Dec'
     ];
 
+    const domain = d3Extent(plotData, d => d.value);
+    const count = 5;
+
+    const legendScale = d3ScaleLinear()
+      .domain([0, count - 1])
+      .range(domain);
+
+    const legendData = Array(count)
+      .fill()
+      .map(function(v, i) {
+        return legendScale(i);
+      });
+
     const colorScale = d3ScaleQuantize()
-      .domain(d3Extent(plotData, d => d.value))
-      .range(d3SchemeYlGn[5].slice(1));
+      .domain(domain)
+      .range(d3SchemeYlGn[count]);
     const nilColor = '#EEE';
 
     return (
@@ -121,7 +135,7 @@ class RobinExample extends React.Component {
               padding={padding}
               theme={theme}
             >
-              <g className="year" style={{transform: `translate(30px,0px)`}}>
+              <g className="heatmap">
                 {plotData.map(function(d) {
                   const date = parseDate(d.key);
 
@@ -142,7 +156,9 @@ class RobinExample extends React.Component {
                     />
                   );
                 })}
+              </g>
 
+              <g className="axis">
                 {dayNames.map(function(d, i) {
                   if (i % 2) {
                     return null;
@@ -151,7 +167,7 @@ class RobinExample extends React.Component {
                   return (
                     <g
                       key={d}
-                      className="titles-day"
+                      className="axis-label"
                       style={{
                         transform: `translate(-${sizeByDay / 2}px,${sizeByDay *
                           (i + 1)}px)`
@@ -160,7 +176,7 @@ class RobinExample extends React.Component {
                       <text
                         className={dayNames[i]}
                         dy="-.35em"
-                        style={Object.assign({}, theme.axis.style.axisLabel, {
+                        style={Object.assign({}, theme.axis.style.tickLabels, {
                           textAnchor: 'end'
                         })}
                       >
@@ -169,14 +185,16 @@ class RobinExample extends React.Component {
                     </g>
                   );
                 })}
+              </g>
 
+              <g className="axis">
                 {monthNames.map(function(d, i) {
                   // @todo Set x position based on number of days. Months
                   // shouldn't be evenly spaced.
                   return (
                     <g
                       key={d}
-                      className="titles-month"
+                      className="axis-label"
                       style={{
                         transform: `translate(${(i + 0.5) *
                           (plotWidth / 12)}px,-${sizeByDay / 2}px)`
@@ -185,7 +203,7 @@ class RobinExample extends React.Component {
                       <text
                         className={monthNames[i]}
                         dy="-.35em"
-                        style={Object.assign({}, theme.axis.style.axisLabel, {
+                        style={Object.assign({}, theme.axis.style.tickLabels, {
                           textAnchor: 'middle'
                         })}
                       >
@@ -194,6 +212,63 @@ class RobinExample extends React.Component {
                     </g>
                   );
                 })}
+              </g>
+
+              <g
+                className="legend"
+                style={{transform: `translate(0px,${sizeByDay * 8}px)`}}
+              >
+                {legendData.map(function(d, i) {
+                  return (
+                    <rect
+                      key={d}
+                      className="legend-datum"
+                      style={{
+                        fill: d ? colorScale(d) : nilColor,
+                        strokeWidth: '2px',
+                        stroke: 'white',
+                        shapeRendering: 'crispEdges'
+                      }}
+                      width={sizeByDay}
+                      height={sizeByDay}
+                      x={i * sizeByDay}
+                      y={0}
+                    />
+                  );
+                })}
+
+                <g
+                  className="legend-label"
+                  style={{
+                    transform: `translate(-${sizeByDay / 2}px,${sizeByDay}px)`
+                  }}
+                >
+                  <text
+                    dy="-.35em"
+                    style={Object.assign({}, theme.legend.style.labels, {
+                      textAnchor: 'end'
+                    })}
+                  >
+                    {domain[0]}
+                  </text>
+                </g>
+
+                <g
+                  className="legend-label"
+                  style={{
+                    transform: `translate(${legendData.length * sizeByDay +
+                      sizeByDay / 2}px,${sizeByDay}px)`
+                  }}
+                >
+                  <text
+                    dy="-.35em"
+                    style={Object.assign({}, theme.legend.style.labels, {
+                      textAnchor: 'start'
+                    })}
+                  >
+                    {domain[1]}
+                  </text>
+                </g>
               </g>
             </RobinChart>
           </div>
