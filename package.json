@@ -44,6 +44,7 @@
     "csvtojson": "^1.0.3",
     "d3-array": "^1.2.1",
     "d3-axis": "^1.0.8",
+    "d3-collection": "^1.0.4",
     "d3-ease": "^1.0.3",
     "d3-interpolate": "^1.1.5",
     "d3-scale": "^1.0.6",

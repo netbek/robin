@@ -42,6 +42,32 @@ Plugins can be installed from the command line. To install a few useful ones:
 
 ### Sublime Text 3
 
+## Resources
+
+### Dataviz
+
+* [Awesome dataviz](https://github.com/fasouto/awesome-dataviz)
+* [The Data Visualisation Catalogue](https://datavizcatalogue.com/)
+
+### JavaScript
+
+* [Learning Core Javascript (ES5)](https://github.com/markerikson/react-redux-links#learning-core-javascript-es5)
+* [Learning Current Javascript (ES6+)](https://github.com/markerikson/react-redux-links#learning-current-javascript-es6)
+* [Learn JS Data](http://learnjsdata.com/) - Data cleaning, manipulation and wrangling
+* [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS#titles)
+
+### D3
+
+* [Awesome D3](https://github.com/wbkd/awesome-d3)
+
+### React
+
+* [React/Redux Links](https://github.com/markerikson/react-redux-links)
+
+### SVG
+
+* [Pocket Guide to Writing SVG](http://svgpocketguide.com/)
+
 ## License
 
 Copyright (c) 2017 Hein Bekker. Licensed under the GNU Affero General Public License, version 3.
