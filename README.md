@@ -54,6 +54,8 @@ Plugins can be installed from the command line. To install a few useful ones:
 
 * [Awesome dataviz](https://github.com/fasouto/awesome-dataviz)
 * [The Data Visualisation Catalogue](https://datavizcatalogue.com/)
+* [Data Viz Project](http://datavizproject.com/)
+* [The Python Graph Gallery](https://python-graph-gallery.com/)
 
 ### JavaScript
 
