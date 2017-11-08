@@ -23,6 +23,7 @@ import {
   timeParse as d3TimeParse
 } from 'd3-time-format';
 
+// @todo Set height based on block size.
 const width = 960;
 const height = 300;
 const padding = {
@@ -143,17 +144,22 @@ class RobinExample extends React.Component {
                 })}
 
                 {dayNames.map(function(d, i) {
+                  if (i % 2) {
+                    return null;
+                  }
+
                   return (
                     <g
                       key={d}
                       className="titles-day"
                       style={{
-                        transform: `translate(-5px,${sizeByDay * (i + 1)}px)`
+                        transform: `translate(-${sizeByDay / 2}px,${sizeByDay *
+                          (i + 1)}px)`
                       }}
                     >
                       <text
                         className={dayNames[i]}
-                        dy="-.25em"
+                        dy="-.35em"
                         style={Object.assign({}, theme.axis.style.axisLabel, {
                           textAnchor: 'end'
                         })}
@@ -165,19 +171,22 @@ class RobinExample extends React.Component {
                 })}
 
                 {monthNames.map(function(d, i) {
+                  // @todo Set x position based on number of days. Months
+                  // shouldn't be evenly spaced.
                   return (
                     <g
                       key={d}
                       className="titles-month"
                       style={{
-                        transform: `translate(${(i + 1) * (plotWidth / 12) -
-                          30}px,-5px)`
+                        transform: `translate(${(i + 0.5) *
+                          (plotWidth / 12)}px,-${sizeByDay / 2}px)`
                       }}
                     >
                       <text
                         className={monthNames[i]}
+                        dy="-.35em"
                         style={Object.assign({}, theme.axis.style.axisLabel, {
-                          textAnchor: 'end'
+                          textAnchor: 'middle'
                         })}
                       >
                         {monthNames[i]}
