@@ -1,7 +1,7 @@
 import {assign} from 'lodash';
 import jQuery from 'jquery';
 import React from 'react';
-import RobinExample from 'RobinExample/js/components/RobinExample';
+import RobinExample from 'RobinExample/js/components/RobinCalendarHeatmapExample';
 
 const $view = jQuery('.view');
 
