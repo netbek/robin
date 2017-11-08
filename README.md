@@ -10,7 +10,13 @@ Dataviz sandbox with D3, React, and R datasets.
   yarn install --pure-lockfile
   ```
 
-2. Install the [LiveReload extension for Chrome, Firefox, Safari](http://livereload.com/extensions).
+2. (Optional) Install the additional datasets:
+
+  ```
+  cd datasets && ./install.sh
+  ```
+
+3. Install the [LiveReload extension for Chrome, Firefox, Safari](http://livereload.com/extensions).
 
 ## Usage
 
