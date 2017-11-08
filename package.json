@@ -8,6 +8,7 @@
     "url": "git://github.com/netbek/robin"
   },
   "scripts": {
+    "postinstall": "cd datasets && ./install.sh",
     "test": "make test"
   },
   "author": {
