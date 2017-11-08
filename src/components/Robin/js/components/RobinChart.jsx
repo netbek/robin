@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import themeMaterial from 'Robin/js/themes/material';
-import computeTheme from 'Robin/js/utils/computeTheme';
 
 class RobinChart extends React.Component {
   static propTypes = {
+    children: PropTypes.node,
     height: PropTypes.number,
     padding: PropTypes.shape({
       top: PropTypes.number,
@@ -31,8 +31,6 @@ class RobinChart extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.state = Object.assign({}, this.computeState(props));
-
     this.handleMouseMove = this.handleMouseMove.bind(this);
   }
 
@@ -42,29 +40,33 @@ class RobinChart extends React.Component {
     const {handleMouseMove} = this;
     const {children, height, padding, theme, width} = this.props;
 
-    const computedTheme = computeTheme({
-      theme: theme.chart,
-      padding,
-      width,
-      height
+    const computedTheme = Object.assign({}, theme.chart, {
+      padding: padding || theme.chart.padding,
+      width: width || theme.chart.width,
+      height: height || theme.chart.height
     });
-
-    console.log(computedTheme);
 
     return (
       <svg
-        width={width}
-        height={height}
+        className="robin-chart"
+        width={computedTheme.width}
+        height={computedTheme.height}
         ref={node => (this.svg = node)}
         onMouseMove={handleMouseMove}
       >
         <g
           style={{
-            transform: `translate(${padding.left}px,${padding.top}px)`
+            transform: `translate(${computedTheme.padding
+              .left}px,${computedTheme.padding.top}px)`
           }}
         >
           {React.Children.map(children, child =>
-            React.cloneElement(child, {theme: computedTheme})
+            React.cloneElement(child, {
+              theme,
+              chartWidth: computedTheme.width,
+              chartHeight: computedTheme.height,
+              chartPadding: computedTheme.padding
+            })
           )}
         </g>
       </svg>

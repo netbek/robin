@@ -8,8 +8,11 @@ nbproject
 .idea
 .netbeans.xml
 
+# Datasets that may not be distributed
+/datasets/laqn
+
 # Dist
-/dist/
+/dist
 
 # GH pages
 .publish
