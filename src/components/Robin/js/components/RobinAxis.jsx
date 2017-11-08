@@ -9,8 +9,10 @@ import {
 } from 'd3-axis';
 import {select as d3Select} from 'd3-selection';
 import 'd3-selection-multi';
-import computeTheme from 'Robin/js/utils/computeTheme';
+import {ORIENTATION} from 'Robin/js/constants';
 import hyphenateStyle from 'Robin/js/utils/hyphenateStyle';
+
+const {TOP, RIGHT, BOTTOM, LEFT} = ORIENTATION;
 
 class RobinAxis extends React.Component {
   static propTypes = {
@@ -18,7 +20,7 @@ class RobinAxis extends React.Component {
     axisLabelComponent: PropTypes.element,
     height: PropTypes.number,
     label: PropTypes.any,
-    orientation: PropTypes.oneOf(['bottom', 'left']),
+    orientation: PropTypes.oneOf([BOTTOM, LEFT]),
     scale: PropTypes.function,
     style: PropTypes.shape({
       axis: PropTypes.object,
@@ -37,7 +39,7 @@ class RobinAxis extends React.Component {
   };
 
   static defaultProps = {
-    orientation: 'bottom',
+    orientation: BOTTOM,
     theme: themeMaterial
   };
 
@@ -49,44 +51,41 @@ class RobinAxis extends React.Component {
 
   computeState(props) {
     const {
+      chartPadding,
+      chartWidth,
+      chartHeight,
+      width,
       height,
-      orientation,
       padding,
+      orientation,
       scale,
       style,
       theme,
-      tickCount,
-      width
+      tickCount
     } = props;
 
-    // console.log(width, height);
-
-    const computedTheme = computeTheme({
-      theme: theme.axis,
-      padding,
-      style,
-      width,
-      height
+    const computedTheme = Object.assign({}, theme.axis, {
+      padding: padding || 0,
+      width: width || chartWidth - chartPadding.right - chartPadding.left,
+      height: height || chartHeight - chartPadding.top - chartPadding.bottom
     });
-
-    // console.log(computedTheme);
 
     var axis;
 
     switch (orientation) {
-      case 'top':
+      case TOP:
         axis = d3AxisTop();
         break;
 
-      case 'right':
+      case RIGHT:
         axis = d3AxisRight();
         break;
 
-      case 'bottom':
+      case BOTTOM:
         axis = d3AxisBottom();
         break;
 
-      case 'left':
+      case LEFT:
         axis = d3AxisLeft();
         break;
     }
@@ -106,21 +105,21 @@ class RobinAxis extends React.Component {
   render() {
     const {label, orientation} = this.props;
     const {axis, theme} = this.state;
-    const {height, style, width} = theme;
+    const {width, height, style} = theme;
 
-    var groupStyle = {};
+    var nodeStyle = {};
     var axisLabelProps = {};
     var axisLabelStyle = {};
 
     switch (orientation) {
-      case 'top':
+      case TOP:
         break;
 
-      case 'right':
+      case RIGHT:
         break;
 
-      case 'bottom':
-        groupStyle = {
+      case BOTTOM:
+        nodeStyle = {
           transform: `translate(0,${height}px)`
         };
         axisLabelProps = {
@@ -132,8 +131,8 @@ class RobinAxis extends React.Component {
         });
         break;
 
-      case 'left':
-        groupStyle = {
+      case LEFT:
+        nodeStyle = {
           transform: 'rotate(-90)'
         };
         axisLabelProps = {
@@ -149,6 +148,7 @@ class RobinAxis extends React.Component {
 
     return (
       <g
+        className="robin-axis"
         ref={function(node) {
           const axisNode = d3Select(node).call(axis);
           const axisStyle = hyphenateStyle(style.axis);
@@ -159,7 +159,7 @@ class RobinAxis extends React.Component {
           axisNode.selectAll('.tick line').styles(ticksStyle);
           axisNode.selectAll('.tick text').styles(tickLabelsStyle);
         }}
-        style={groupStyle}
+        style={nodeStyle}
       >
         <text {...axisLabelProps} style={axisLabelStyle}>
           {label}

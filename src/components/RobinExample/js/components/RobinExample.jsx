@@ -12,6 +12,12 @@ import {
 
 const width = 960;
 const height = 500;
+const padding = {
+  top: 50,
+  right: 50,
+  bottom: 50,
+  left: 50
+};
 
 class RobinExample extends React.Component {
   static propTypes = {
@@ -47,12 +53,12 @@ class RobinExample extends React.Component {
 
     const xScale = d3ScaleLinear()
       .domain(d3ArrayExtent(plotData, d => d.x))
-      .range([0, width])
+      .range([0, width - padding.right - padding.left])
       .nice();
 
     const yScale = d3ScaleLinear()
       .domain(d3ArrayExtent(plotData, d => d.y))
-      .range([height, 0])
+      .range([height - padding.top - padding.bottom, 0])
       .nice();
 
     return {
@@ -77,7 +83,12 @@ class RobinExample extends React.Component {
       <div className="robin-example">
         <div style={{overflow: 'hidden', overflowX: 'auto'}}>
           <div style={{minWidth: width}}>
-            <RobinChart width={width} height={height} theme={theme}>
+            <RobinChart
+              width={width}
+              height={height}
+              padding={padding}
+              theme={theme}
+            >
               <RobinAxis
                 orientation="left"
                 scale={yScale}

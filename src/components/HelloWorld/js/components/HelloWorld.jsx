@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Dashboard from './Dashboard';
 
 class HelloWorld extends React.Component {
   static propTypes = {
@@ -13,7 +14,11 @@ class HelloWorld extends React.Component {
   };
 
   render() {
-    return <div className="hello-world">@todo</div>;
+    return (
+      <div className="hello-world">
+        <Dashboard />
+      </div>
+    );
   }
 }
 
