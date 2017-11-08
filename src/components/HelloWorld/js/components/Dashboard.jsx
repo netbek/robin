@@ -50,6 +50,10 @@ class Dashboard extends React.Component {
     };
 
     loadAndParse(url, config).then(function(data) {
+      if (!data.length) {
+        throw new Error('No data');
+      }
+
       const header = data[0];
       const rows = data.slice(1);
 
