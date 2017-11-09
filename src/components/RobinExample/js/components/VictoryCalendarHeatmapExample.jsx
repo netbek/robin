@@ -13,7 +13,8 @@ import theme from '../../../../js/theme';
 import {extent as d3Extent} from 'd3-array';
 import {
   scaleLinear as d3ScaleLinear,
-  scaleQuantize as d3ScaleQuantize
+  scaleQuantize as d3ScaleQuantize,
+  scaleTime as d3ScaleTime
 } from 'd3-scale';
 import {schemeYlGn as d3SchemeYlGn} from 'd3-scale-chromatic';
 import {first, last} from 'lodash';
@@ -26,6 +27,7 @@ import {
   sum as d3Sum
 } from 'd3-array';
 import {nest as d3Nest, values as d3Values} from 'd3-collection';
+import {timeDays as d3TimeDays} from 'd3-time';
 import {
   timeFormat as d3TimeFormat,
   timeParse as d3TimeParse
@@ -61,18 +63,51 @@ class VictoryCalendarHeatmapExample extends React.Component {
   computeState(props) {
     const {entities} = props;
 
-    const data = d3Nest()
-      .key(d => moment(d.date, moment.ISO_8601).format('YYYY-MM-DD'))
-      .sortKeys(d3Ascending)
-      .rollup(v => d3Sum(v, d => d.activity))
-      // .entries(entities.activity.slice(0, 3));
-      .entries(entities.activity);
+    const year = 2015;
+
+    // const pad = Array(365 - entities.activity.length)
+    //   .fill()
+    //   .map(function() {
+    //     return {
+    //       key: undefined,
+    //       value: undefined
+    //     };
+    //   });
+
+    // console.log(d3TimeDays);
+    //
+    // const hello = d3ScaleTime()
+    //   .domain([new Date(year, 0, 0), new Date(year, 11, 0)])
+    //   .ticks(d3TimeDays, 1);
+
+    // console.log(
+    //   d3TimeDays(new Date(year, 0, 1), new Date(year + 1, 0, 1)).length
+    // );
+
+    // var dateArray = d3.time.scale()
+    //                 .domain([new Date(2013, 2, 28), new Date(2013, 3, 2)])
+    //                 .ticks(d3.time.days, 1)
 
     const day = function(d) {
       return (d.getDay() + 6) % 7;
     };
     const week = d3TimeFormat('%W');
     const parseDate = d3TimeParse('%Y-%m-%d');
+
+    const dates = d3TimeDays(
+      new Date(year, 0, 1),
+      new Date(year + 1, 0, 1)
+    ).map(d => `${d.getUTCFullYear()}`);
+
+    const data = d3Nest()
+      .key(d => moment(d.date, moment.ISO_8601).format('YYYY-MM-DD'))
+      // .key(d => parseDate(d.date))
+      .sortKeys(d3Ascending)
+      .rollup(v => d3Sum(v, d => d.activity))
+      // .entries(entities.activity.slice(0, 3));
+      .entries(entities.activity);
+
+    console.log(dates);
 
     const domain = d3Extent(data, d => d.value);
     const count = 5;
@@ -214,6 +249,7 @@ class VictoryCalendarHeatmapExample extends React.Component {
     }
 
     const multiplier = 0.87; // From /src/victory-primitives/path-helpers.js
+    const size = 18 / (multiplier * 2);
 
     return (
       <div className="robin-example">
@@ -221,12 +257,12 @@ class VictoryCalendarHeatmapExample extends React.Component {
           <div style={{minWidth: width}}>
             <VictoryChart
               width={
-                2 * multiplier * 10 * (xExtent[1] + 1) +
+                2 * multiplier * size * (xExtent[1] + 1) +
                 padding.right +
                 padding.left
               }
               height={
-                multiplier * 2 * multiplier * 10 * 7 +
+                multiplier * 2 * multiplier * size * 7 +
                 padding.top +
                 padding.bottom
               }
@@ -255,13 +291,12 @@ class VictoryCalendarHeatmapExample extends React.Component {
                 }}
               />
               <VictoryScatter
-                scale={1}
-                size={10}
+                size={size}
                 symbol="square"
                 style={{
                   data: {
-                    // stroke: 'white',
-                    // strokeWidth: 2,
+                    stroke: 'white',
+                    strokeWidth: 2,
                     shapeRendering: 'crispEdges'
                   }
                 }}
