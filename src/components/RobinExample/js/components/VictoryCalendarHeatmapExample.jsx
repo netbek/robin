@@ -6,9 +6,9 @@ import {
   VictoryAxis,
   VictoryChart,
   VictoryContainer,
+  VictoryLabel,
   VictoryScatter
 } from 'victory';
-import VictoryCalendarHeatmap from 'Robin/js/components/VictoryCalendarHeatmap';
 import theme from '../../../../js/theme';
 import {extent as d3Extent} from 'd3-array';
 import {
@@ -130,6 +130,7 @@ class VictoryCalendarHeatmapExample extends React.Component {
     const week = d3TimeFormat('%W');
     const parseDate = d3TimeParse('%Y-%m-%d');
 
+    // @todo Use d3-time-format https://github.com/d3/d3-time-format#locales
     const dayNames = [
       'Mon',
       'Tue',
@@ -139,6 +140,8 @@ class VictoryCalendarHeatmapExample extends React.Component {
       'Sat',
       'Sun'
     ].reverse();
+
+    // @todo Use d3-time-format https://github.com/d3/d3-time-format#locales
     const monthNames = [
       'Jan',
       'Feb',
@@ -172,29 +175,52 @@ class VictoryCalendarHeatmapExample extends React.Component {
       .range(d3SchemeYlGn[count]);
     const nilColor = '#EEE';
 
+    var getWeekDate = function(year, weekNumber, dayNumber) {
+      var date = new Date(year, 0, 0, 0, 0, 0);
+      var day = new Date(year, 0, 0, 0, 0, 0);
+      var month = day.getTime() - date.getDay() * 86400000;
+      var ans = new Date(month + ((weekNumber - 1) * 7 + dayNumber) * 86400000);
+
+      if (weekNumber === 1 && ans.getMonth() !== 0) {
+        // We're still in last year... handle appropriately
+        console.log('here');
+      }
+
+      return ans;
+    };
+
+    const xExtent = d3Extent(plotData, d => d.x);
+
+    const xTickValues = Array(xExtent[1] + 1)
+      .fill()
+      .map(function(v, i) {
+        return i;
+      });
+
+    const year = 2015;
+
+    var done = [];
+
+    function xTickFormat(d, i) {
+      const month = getWeekDate(year, d + 1, 0).getMonth();
+
+      if (!i || ~done.indexOf(month) || (!done.length && month)) {
+        return '';
+      }
+
+      done.push(month);
+
+      return monthNames[month];
+    }
+
     return (
       <div className="robin-example">
         <div style={{overflow: 'hidden', overflowX: 'auto'}}>
           <div style={{minWidth: width}}>
-            <VictoryScatter
-              width={width}
-              height={sizeByDay * 7}
-              padding={0}
-              standalone
-              size={sizeByDay / 2}
-              symbol="square"
-              style={{
-                data: {
-                  strokeWidth: '2px',
-                  stroke: 'white',
-                  shapeRendering: 'crispEdges'
-                }
-              }}
-              data={plotData}
-            />
-
             <VictoryChart
-              width={width}
+              width={
+                sizeByDay * (xExtent[1] + 1) + padding.right + padding.left
+              }
               height={sizeByDay * 7 + padding.top + padding.bottom}
               padding={padding}
               theme={theme}
@@ -203,15 +229,28 @@ class VictoryCalendarHeatmapExample extends React.Component {
               <VictoryAxis
                 dependentAxis
                 tickFormat={d => ((d - 1) % 2 ? '' : dayNames[d - 1])}
+                style={{
+                  axis: {stroke: 'none'},
+                  grid: {stroke: 'none'},
+                  ticks: {stroke: 'none'}
+                }}
               />
-              <VictoryAxis />
+              <VictoryAxis
+                tickValues={xTickValues}
+                tickFormat={xTickFormat}
+                tickLabelComponent={<VictoryLabel dx={-sizeByDay / 2} />}
+                style={{
+                  axis: {stroke: 'none'},
+                  grid: {stroke: 'none'},
+                  ticks: {stroke: 'none'},
+                  tickLabels: {textAnchor: 'start'}
+                }}
+              />
               <VictoryScatter
                 size={sizeByDay / 2}
                 symbol="square"
                 style={{
                   data: {
-                    strokeWidth: '2px',
-                    stroke: 'white',
                     shapeRendering: 'crispEdges'
                   }
                 }}

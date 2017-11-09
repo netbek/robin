@@ -1,5 +1,6 @@
 // http://bl.ocks.org/eesur/5fbda7f410d31da35e42
 // https://github.com/DKirwan/calendar-heatmap
+// https://bl.ocks.org/mbostock/4063318
 
 import PropTypes from 'prop-types';
 import React from 'react';
