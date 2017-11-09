@@ -213,15 +213,23 @@ class VictoryCalendarHeatmapExample extends React.Component {
       return monthNames[month];
     }
 
+    const multiplier = 0.87; // From /src/victory-primitives/path-helpers.js
+
     return (
       <div className="robin-example">
         <div style={{overflow: 'hidden', overflowX: 'auto'}}>
           <div style={{minWidth: width}}>
             <VictoryChart
               width={
-                sizeByDay * (xExtent[1] + 1) + padding.right + padding.left
+                2 * multiplier * 10 * (xExtent[1] + 1) +
+                padding.right +
+                padding.left
               }
-              height={sizeByDay * 7 + padding.top + padding.bottom}
+              height={
+                multiplier * 2 * multiplier * 10 * 7 +
+                padding.top +
+                padding.bottom
+              }
               padding={padding}
               theme={theme}
               containerComponent={<VictoryContainer responsive={false} />}
@@ -247,10 +255,13 @@ class VictoryCalendarHeatmapExample extends React.Component {
                 }}
               />
               <VictoryScatter
-                size={sizeByDay / 2}
+                scale={1}
+                size={10}
                 symbol="square"
                 style={{
                   data: {
+                    // stroke: 'white',
+                    // strokeWidth: 2,
                     shapeRendering: 'crispEdges'
                   }
                 }}
