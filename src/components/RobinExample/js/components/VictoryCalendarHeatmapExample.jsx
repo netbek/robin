@@ -43,6 +43,20 @@ const padding = {
   left: 50
 };
 
+function getIsoWeekdayNames() {
+  return Array(7)
+    .fill()
+    .map((v, i) =>
+      moment()
+        .isoWeekday(i + 1)
+        .format('ddd')
+    );
+}
+
+function getMonthNames() {
+  return moment.monthsShort();
+}
+
 function getDaysInYear(year) {
   return moment([year]).isLeapYear() ? 366 : 365;
 }
@@ -164,32 +178,8 @@ class VictoryCalendarHeatmapExample extends React.Component {
     const week = d3TimeFormat('%W');
     const parseDate = d3TimeParse('%Y-%m-%d');
 
-    // @todo Use d3-time-format https://github.com/d3/d3-time-format#locales
-    const dayNames = [
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thu',
-      'Fri',
-      'Sat',
-      'Sun'
-    ].reverse();
-
-    // @todo Use d3-time-format https://github.com/d3/d3-time-format#locales
-    const monthNames = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ];
+    const isoWeekdayNames = getIsoWeekdayNames().reverse();
+    const monthNames = getMonthNames();
 
     const domain = d3Extent(plotData, d => d.value);
     const count = 5;
@@ -271,7 +261,7 @@ class VictoryCalendarHeatmapExample extends React.Component {
             >
               <VictoryAxis
                 dependentAxis
-                tickFormat={d => ((d - 1) % 2 ? '' : dayNames[d - 1])}
+                tickFormat={d => ((d - 1) % 2 ? '' : isoWeekdayNames[d - 1])}
                 style={{
                   axis: {stroke: 'none'},
                   grid: {stroke: 'none'},
