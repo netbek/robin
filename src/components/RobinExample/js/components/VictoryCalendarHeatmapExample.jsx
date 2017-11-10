@@ -3,10 +3,12 @@ import React from 'react';
 // import RobinAxis from 'Robin/js/components/RobinAxis';
 // import RobinChart from 'Robin/js/components/RobinChart';
 import {
+  Point,
   VictoryAxis,
   VictoryChart,
   VictoryContainer,
   VictoryLabel,
+  VictoryLegend,
   VictoryScatter
 } from 'victory';
 import theme from '../../../../js/theme';
@@ -291,6 +293,29 @@ class VictoryCalendarHeatmapExample extends React.Component {
                 }}
                 data={plotData}
               />
+              <VictoryLegend
+                x={10}
+                y={10}
+                orientation="horizontal"
+                gutter={0}
+                symbolSpacer={size}
+                style={{
+                  data: {
+                    type: 'square',
+                    stroke: 'white',
+                    strokeWidth: 2,
+                    shapeRendering: 'crispEdges'
+                  }
+                }}
+                data={[
+                  {name: ''},
+                  {name: ''},
+                  {name: ''},
+                  {name: ''},
+                  {name: '200'}
+                ]}
+                dataComponent={<CustomPoint size={size} />}
+              />
             </VictoryChart>
           </div>
         </div>
@@ -316,6 +341,19 @@ class VictoryCalendarHeatmapExample extends React.Component {
         </table>
       </div>
     );
+  }
+}
+
+class CustomPoint extends Point {
+  render() {
+    // const {style} = this.props;
+    //
+    // return <rect width={20} height={20} fill="black" style={style} />;
+
+    console.log(this.path);
+    console.log(this.style);
+
+    return this.renderPoint(this.path, this.style, this.props.events);
   }
 }
 
