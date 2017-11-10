@@ -27,6 +27,6 @@ var randomActivity = require(resolve('gulp/utils/randomActivity'));
 // });
 
 module.exports = {
-  activity: randomActivity(2015, 0, 250).slice(0, 4)
+  activity: randomActivity(2015, 0, 250)
   // iris: cleanRows
 };

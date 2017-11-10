@@ -17,7 +17,7 @@ import {
   scaleTime as d3ScaleTime
 } from 'd3-scale';
 import {schemeYlGn as d3SchemeYlGn} from 'd3-scale-chromatic';
-import {first, last} from 'lodash';
+import {first, last, pluck, difference, sortBy} from 'lodash';
 import moment from 'moment';
 import {
   ascending as d3Ascending,
@@ -27,7 +27,7 @@ import {
   sum as d3Sum
 } from 'd3-array';
 import {nest as d3Nest, values as d3Values} from 'd3-collection';
-import {timeDays as d3TimeDays} from 'd3-time';
+import {utcDays as d3UtcDays} from 'd3-time';
 import {
   timeFormat as d3TimeFormat,
   timeParse as d3TimeParse
@@ -42,6 +42,32 @@ const padding = {
   bottom: 50,
   left: 50
 };
+
+function getDaysInYear(year) {
+  return moment([year]).isLeapYear() ? 366 : 365;
+}
+
+function computeCompleteData(data, year, keyFormat) {
+  const formatKey = d3TimeFormat(keyFormat);
+
+  const dataKeys = pluck(data, 'key');
+
+  const expectedDataKeys = d3UtcDays(
+    new Date(year, 0, 1),
+    new Date(year + 1, 0, 1)
+  ).map(d => formatKey(d));
+
+  const missingData = difference(expectedDataKeys, dataKeys).map(d => ({
+    key: d,
+    value: 0
+  }));
+
+  if (missingData.length) {
+    return sortBy([].concat(missingData, data), 'key');
+  }
+
+  return data;
+}
 
 class VictoryCalendarHeatmapExample extends React.Component {
   static propTypes = {
@@ -65,56 +91,29 @@ class VictoryCalendarHeatmapExample extends React.Component {
 
     const year = 2015;
 
-    // const pad = Array(365 - entities.activity.length)
-    //   .fill()
-    //   .map(function() {
-    //     return {
-    //       key: undefined,
-    //       value: undefined
-    //     };
-    //   });
-
-    // console.log(d3TimeDays);
-    //
-    // const hello = d3ScaleTime()
-    //   .domain([new Date(year, 0, 0), new Date(year, 11, 0)])
-    //   .ticks(d3TimeDays, 1);
-
-    // console.log(
-    //   d3TimeDays(new Date(year, 0, 1), new Date(year + 1, 0, 1)).length
-    // );
-
-    // var dateArray = d3.time.scale()
-    //                 .domain([new Date(2013, 2, 28), new Date(2013, 3, 2)])
-    //                 .ticks(d3.time.days, 1)
-
     const day = function(d) {
       return (d.getDay() + 6) % 7;
     };
     const week = d3TimeFormat('%W');
-    const parseDate = d3TimeParse('%Y-%m-%d');
 
-    const dates = d3TimeDays(
-      new Date(year, 0, 1),
-      new Date(year + 1, 0, 1)
-    ).map(d => `${d.getUTCFullYear()}`);
+    const dateFormat = '%Y-%m-%d';
+    const parseDate = d3TimeParse(dateFormat);
 
     const data = d3Nest()
-      .key(d => moment(d.date, moment.ISO_8601).format('YYYY-MM-DD'))
-      // .key(d => parseDate(d.date))
+      .key(d => d.date)
       .sortKeys(d3Ascending)
       .rollup(v => d3Sum(v, d => d.activity))
-      // .entries(entities.activity.slice(0, 3));
       .entries(entities.activity);
 
-    console.log(dates);
+    // Add missing dates, if any.
+    const completeData = computeCompleteData(data, year, dateFormat);
 
-    const domain = d3Extent(data, d => d.value);
+    const dataExtent = d3Extent(data, d => d.value);
     const count = 5;
 
     const legendScale = d3ScaleLinear()
       .domain([0, count - 1])
-      .range(domain);
+      .range(dataExtent);
 
     const legendData = Array(count)
       .fill()
@@ -123,11 +122,11 @@ class VictoryCalendarHeatmapExample extends React.Component {
       });
 
     const colorScale = d3ScaleQuantize()
-      .domain(domain)
+      .domain(dataExtent)
       .range(d3SchemeYlGn[count]);
-    const nilColor = '#EEE';
+    const nilColor = '#E7E7E7'; // grey-100
 
-    const plotData = data.map((d, i) => {
+    const plotData = completeData.map((d, i) => {
       const date = parseDate(d.key);
 
       return Object.assign(d, {
@@ -208,7 +207,7 @@ class VictoryCalendarHeatmapExample extends React.Component {
     const colorScale = d3ScaleQuantize()
       .domain(domain)
       .range(d3SchemeYlGn[count]);
-    const nilColor = '#EEE';
+    const nilColor = '#E7E7E7'; // grey-100
 
     var getWeekDate = function(year, weekNumber, dayNumber) {
       var date = new Date(year, 0, 0, 0, 0, 0);
