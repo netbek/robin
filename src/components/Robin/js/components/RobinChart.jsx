@@ -38,7 +38,7 @@ class RobinChart extends React.Component {
 
   render() {
     const {handleMouseMove} = this;
-    const {children, height, padding, theme, width} = this.props;
+    const {children, height, padding, theme, width, onMouseMove} = this.props;
 
     const computedTheme = Object.assign({}, theme.chart, {
       padding: padding || theme.chart.padding,
@@ -52,7 +52,7 @@ class RobinChart extends React.Component {
         width={computedTheme.width}
         height={computedTheme.height}
         ref={node => (this.svg = node)}
-        onMouseMove={handleMouseMove}
+        onMouseMove={onMouseMove}
       >
         <g
           style={{

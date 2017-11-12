@@ -1,0 +1,66 @@
+.robin-tooltip {
+  padding: .25rem;
+  position: absolute;
+  z-index: 9999;
+  cursor: default;
+  // animation: .5s fadeIn;
+
+  &__content {
+    padding: .5rem;
+    border-radius: .25rem;
+    background: #252525;
+    color: #fff;
+    // font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 12 / 16 * 1rem;
+    line-height: 1;
+  }
+
+  &:after {
+    content: '';
+    width: 0;
+    height: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: .5rem solid transparent;
+  }
+
+  &--top:after {
+    top: auto;
+    border-bottom: 0;
+    border-top-color: #252525;
+  }
+
+  &--left:after {
+    left: auto;
+    border-right: 0;
+    border-left-color: #252525;
+  }
+
+  &--right:after {
+    right: auto;
+    border-left: 0;
+    border-right-color: #252525;
+  }
+
+  &--bottom:after {
+    bottom: auto;
+    border-top: 0;
+    border-bottom-color: #252525;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

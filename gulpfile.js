@@ -247,15 +247,16 @@ CssPlugin.prototype.apply = function(compiler) {
             }
 
             if (~value.indexOf(componentLoader)) {
-              var componentName = value
-                .substring(componentLoader.length)
-                .split('/')[0];
+              var parts = value.substring(componentLoader.length).split('/');
+              var dirname = _.first(parts);
+              var extname = path.extname(_.last(parts));
+              var basename = path.basename(_.last(parts), extname);
 
               return path.join(
                 gulpConfig.src.components,
-                componentName,
+                dirname,
                 'css',
-                componentName + '.scss'
+                basename + '.scss'
               );
             }
 

@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-// import RobinAxis from 'Robin/js/components/RobinAxis';
-// import RobinChart from 'Robin/js/components/RobinChart';
 import {
   Point,
   VictoryAxis,
@@ -41,7 +39,8 @@ const height = 300;
 const padding = {
   top: 50,
   right: 50,
-  bottom: 50,
+  // bottom: 50 + 25.862068965517242,
+  bottom: 50 + 15.517241379310345,
   left: 50
 };
 
@@ -85,7 +84,7 @@ function computeCompleteData(data, year, keyFormat) {
   return data;
 }
 
-class VictoryCalendarHeatmapExample extends React.Component {
+class VictoryCalendarHeatmap extends React.Component {
   static propTypes = {
     entities: PropTypes.object,
     env: PropTypes.object
@@ -168,17 +167,17 @@ class VictoryCalendarHeatmapExample extends React.Component {
     const {plotData} = this.state;
     const data = entities.activity;
 
-    const plotWidth = width - padding.right - padding.left;
-    const plotHeight = height - padding.top - padding.bottom;
+    // const plotWidth = width - padding.right - padding.left;
+    // const plotHeight = height - padding.top - padding.bottom;
 
-    const sizeByYear = plotHeight;
+    // const sizeByYear = plotHeight;
     // const sizeByDay = d3Min([sizeByYear / 8, plotWidth / 54]);
-    const sizeByDay = 16;
-    const day = function(d) {
-      return (d.getDay() + 6) % 7;
-    };
-    const week = d3TimeFormat('%W');
-    const parseDate = d3TimeParse('%Y-%m-%d');
+    // const sizeByDay = 16;
+    // const day = function(d) {
+    //   return (d.getDay() + 6) % 7;
+    // };
+    // const week = d3TimeFormat('%W');
+    // const parseDate = d3TimeParse('%Y-%m-%d');
 
     const isoWeekdayNames = getIsoWeekdayNames().reverse();
     const monthNames = getMonthNames();
@@ -242,21 +241,19 @@ class VictoryCalendarHeatmapExample extends React.Component {
     const multiplier = 0.87; // From /src/victory-primitives/path-helpers.js
     const size = 18 / (multiplier * 2);
 
+    const plotWidth = 2 * multiplier * size * (xExtent[1] + 1);
+    const plotHeight = multiplier * 2 * multiplier * size * 7;
+
+    const width = plotWidth + padding.right + padding.left;
+    const height = plotHeight + padding.top + padding.bottom;
+
     return (
-      <div className="robin-example">
+      <div className="victory-calendar-heatmap">
         <div style={{overflow: 'hidden', overflowX: 'auto'}}>
           <div style={{minWidth: width}}>
             <VictoryChart
-              width={
-                2 * multiplier * size * (xExtent[1] + 1) +
-                padding.right +
-                padding.left
-              }
-              height={
-                multiplier * 2 * multiplier * size * 7 +
-                padding.top +
-                padding.bottom
-              }
+              width={width}
+              height={height}
               padding={padding}
               theme={theme}
               containerComponent={<VictoryContainer responsive={false} />}
@@ -271,9 +268,10 @@ class VictoryCalendarHeatmapExample extends React.Component {
                 }}
               />
               <VictoryAxis
+                orientation="top"
                 tickValues={xTickValues}
                 tickFormat={xTickFormat}
-                tickLabelComponent={<VictoryLabel dx={-sizeByDay / 2} />}
+                tickLabelComponent={<VictoryLabel dx={-size * multiplier} />}
                 style={{
                   axis: {stroke: 'none'},
                   grid: {stroke: 'none'},
@@ -282,6 +280,8 @@ class VictoryCalendarHeatmapExample extends React.Component {
                 }}
               />
               <VictoryScatter
+                width={plotWidth}
+                height={plotHeight}
                 size={size}
                 symbol="square"
                 style={{
@@ -294,27 +294,33 @@ class VictoryCalendarHeatmapExample extends React.Component {
                 data={plotData}
               />
               <VictoryLegend
-                x={10}
-                y={10}
+                x={padding.left - size * multiplier * 2}
+                y={padding.top + plotHeight + size * 2.5}
                 orientation="horizontal"
+                borderPadding={0}
                 gutter={0}
-                symbolSpacer={size}
+                symbolSpacer={size * multiplier}
                 style={{
                   data: {
                     type: 'square',
+                    size: size,
                     stroke: 'white',
                     strokeWidth: 2,
                     shapeRendering: 'crispEdges'
                   }
                 }}
-                data={[
-                  {name: ''},
-                  {name: ''},
-                  {name: ''},
-                  {name: ''},
-                  {name: '200'}
-                ]}
-                dataComponent={<CustomPoint size={size} />}
+                data={legendData.map((d, i) => ({
+                  name: i === 0 ? '0' : i === count - 1 ? d : '',
+                  symbol: {
+                    fill: i ? d3SchemeYlGn[count][i] : nilColor
+                  }
+                }))}
+                dataComponent={<CustomPoint />}
+                labelComponent={
+                  <VictoryLabel
+                    dx={d => (d.column ? 0 : -(d.size / multiplier * 2 + 2))}
+                  />
+                }
               />
             </VictoryChart>
           </div>
@@ -344,17 +350,19 @@ class VictoryCalendarHeatmapExample extends React.Component {
   }
 }
 
-class CustomPoint extends Point {
+class CustomPoint extends React.Component {
+  static propTypes = {
+    datum: PropTypes.object,
+    x: PropTypes.number
+  };
+
   render() {
-    // const {style} = this.props;
-    //
-    // return <rect width={20} height={20} fill="black" style={style} />;
+    const {datum, x} = this.props;
 
-    console.log(this.path);
-    console.log(this.style);
-
-    return this.renderPoint(this.path, this.style, this.props.events);
+    return (
+      <Point {...this.props} x={datum.column ? x : x + datum.textSize.width} />
+    );
   }
 }
 
-export default VictoryCalendarHeatmapExample;
+export default VictoryCalendarHeatmap;
