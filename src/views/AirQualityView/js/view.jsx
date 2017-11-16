@@ -1,8 +1,8 @@
 import React from 'react';
-import HelloWorld from 'HelloWorld/js/components/HelloWorld';
+import AirQuality from 'AirQuality/js/components/AirQuality';
 
 export default class View extends React.Component {
   render() {
-    return <HelloWorld />;
+    return <AirQuality />;
   }
 }

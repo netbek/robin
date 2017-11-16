@@ -1,22 +1,26 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Dashboard from './Dashboard';
+import Hello from './Hello';
+import World from './World';
+import randomInt from 'utils/randomInt';
+import {LANG_AF, LANG_EN, LANG_XH} from '../constants';
 
 class HelloWorld extends React.Component {
   static propTypes = {
-    entities: PropTypes.object,
-    env: PropTypes.object
+    langs: PropTypes.arrayOf(PropTypes.string)
   };
 
   static defaultProps = {
-    entities: undefined,
-    env: undefined
+    langs: [LANG_AF, LANG_EN, LANG_XH]
   };
 
   render() {
+    const {langs} = this.props;
+    const lang = langs[randomInt(0, langs.length)];
+
     return (
       <div className="hello-world">
-        <Dashboard />
+        <Hello lang={lang} />, <World />!
       </div>
     );
   }
