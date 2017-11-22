@@ -103,7 +103,7 @@
     "mocha": "^3.4.2",
     "modernizr": "^3.5.0",
     "modernizr-mixin": "^3.0.7",
-    "moment": "2.10.6",
+    "moment": "^2.19.2",
     "node-sass": "^4.5.3",
     "normalize.css": "git://github.com/necolas/normalize.css.git#02c5c7adbbec1707900fde86068405735c733b42",
     "numeral": "^2.0.6",
