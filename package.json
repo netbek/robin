@@ -117,7 +117,7 @@
     "postcss-opacity": "^4.0.0",
     "prettier": "^1.7.4",
     "prop-types": "^15.6.0",
-    "rdatasets": "https://api.github.com/repos/vincentarelbundock/Rdatasets/tarball",
+    "rdatasets": "https://github.com/vincentarelbundock/Rdatasets/archive/master.tar.gz",
     "react": "^15.6.0",
     "react-addons-test-utils": "^15.6.2",
     "react-addons-update": "^15.6.2",
