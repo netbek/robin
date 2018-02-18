@@ -8,6 +8,7 @@
     "url": "git://github.com/netbek/robin"
   },
   "scripts": {
+    "postinstall": "node install",
     "test": "make test"
   },
   "author": {
@@ -56,6 +57,7 @@
     "d3-time-format": "^2.1.0",
     "d3-voronoi": "^1.1.2",
     "del": "^3.0.0",
+    "download": "^6.2.5",
     "enzyme": "^3.1.0",
     "eslint": "^4.9.0",
     "eslint-config-prettier": "^2.6.0",
@@ -135,11 +137,13 @@
     "reselect": "^3.0.1",
     "rimraf": "^2.6.1",
     "run-sequence": "^1.2.2",
-    "sanitize-filename": "^1.6.0",
+    "sanitize-filename": "^1.6.1",
     "sass-color-helpers": "^2.1.1",
     "semiotic": "^1.2.2",
+    "shelljs": "^0.8.1",
     "singularitygs": "^1.8.0",
     "through2": "^2.0.1",
+    "urijs": "^1.19.1",
     "uuid": "^3.1.0",
     "velocity-react": "^1.3.3",
     "victory": "^0.25.6",
