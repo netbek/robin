@@ -7,7 +7,7 @@ var _ = require('lodash');
 var fs = require('fs-extra');
 var Papa = require('papaparse');
 
-var src = resolve('node_modules/rdatasets/csv/datasets/iris.csv');
+var src = resolve('data/rdatasets/csv/datasets/iris.csv');
 var file = fs.readFileSync(src, {encoding: 'binary'});
 var parsed = Papa.parse(file, {header: true, skipEmptyLines: true});
 

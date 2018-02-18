@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {keys, uniq, zipObject} from 'lodash';
-import {extent as d3ArrayExtent} from 'd3-array';
+import {extent as d3Extent} from 'd3-array';
 import {axisBottom as d3AxisBottom, axisLeft as d3AxisLeft} from 'd3-axis';
 import {easeExpOut as d3EaseExpOut} from 'd3-ease';
 import {scaleLinear as d3ScaleLinear} from 'd3-scale';
@@ -9,7 +9,8 @@ import {select as d3Select} from 'd3-selection';
 import 'd3-selection-multi';
 import {line as d3Line} from 'd3-shape';
 import {voronoi as d3Voronoi} from 'd3-voronoi';
-import {scaleOrdinal, schemeCategory10} from 'd3-scale';
+import {scaleOrdinal as d3ScaleOrdinal} from 'd3-scale';
+import {schemeCategory10 as d3SchemeCategory10} from 'd3-scale-chromatic';
 import {Annotation, ConnectorLine, Note} from 'react-annotation';
 import hyphenateStyleName from 'fbjs/lib/hyphenateStyleName';
 import regression from 'regression';
@@ -46,7 +47,7 @@ class D3Example extends React.Component {
   computeChartState(props) {
     const {entities} = props;
 
-    const color = scaleOrdinal(schemeCategory10);
+    const color = d3ScaleOrdinal(d3SchemeCategory10);
 
     const plotData = entities.iris.map(function(d, i) {
       return {
@@ -73,12 +74,12 @@ class D3Example extends React.Component {
     const height = 500 - padding.top - padding.bottom;
 
     const xScale = d3ScaleLinear()
-      .domain(d3ArrayExtent(plotData, d => d.x))
+      .domain(d3Extent(plotData, d => d.x))
       .range([0, width])
       .nice();
 
     const yScale = d3ScaleLinear()
-      .domain(d3ArrayExtent(plotData, d => d.y))
+      .domain(d3Extent(plotData, d => d.y))
       .range([height, 0])
       .nice();
 
@@ -176,12 +177,12 @@ class D3Example extends React.Component {
     const plotHeight = height - padding.top - padding.bottom;
 
     const xScale = d3ScaleLinear()
-      .domain(d3ArrayExtent(plotData, d => d.x))
+      .domain(d3Extent(plotData, d => d.x))
       .range([0, plotWidth])
       .nice();
 
     const yScale = d3ScaleLinear()
-      .domain(d3ArrayExtent(plotData, d => d.y))
+      .domain(d3Extent(plotData, d => d.y))
       .range([plotHeight, 0])
       .nice();
 

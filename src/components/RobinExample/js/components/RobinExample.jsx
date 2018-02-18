@@ -1,22 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {extent as d3Extent} from 'd3-array';
+import {
+  scaleLinear as d3ScaleLinear,
+  scaleOrdinal as d3ScaleOrdinal
+} from 'd3-scale';
+import {schemeCategory10 as d3SchemeCategory10} from 'd3-scale-chromatic';
 import RobinAxis from 'Robin/js/components/RobinAxis';
 import RobinChart from 'Robin/js/components/RobinChart';
 import theme from '../../../../js/theme';
-import {extent as d3ArrayExtent} from 'd3-array';
-import {
-  scaleLinear as d3ScaleLinear,
-  scaleOrdinal as d3ScaleOrdinal,
-  schemeCategory10 as d3SchemeCategory10
-} from 'd3-scale';
 
-const width = 960;
+const width = 500;
 const height = 500;
-const padding = {
-  top: 50,
-  right: 50,
-  bottom: 50,
-  left: 50
+const margin = {
+  top: 20,
+  right: 20,
+  bottom: 60,
+  left: 60
 };
 
 class RobinExample extends React.Component {
@@ -44,28 +44,29 @@ class RobinExample extends React.Component {
     const {entities} = props;
     const data = entities.iris;
 
+    const species = _.uniq(data.map(d => d.species));
+
     const colorScale = d3ScaleOrdinal(d3SchemeCategory10);
 
-    const plotData = data.map(function(d, i) {
-      return {
-        index: i,
-        x: d.sepalWidth,
-        y: d.sepalLength,
-        color: colorScale(d.species)
-      };
-    });
+    const plotData = data.map((d, i) => ({
+      index: i,
+      x: d.sepalWidth,
+      y: d.sepalLength,
+      color: colorScale(d.species)
+    }));
 
     const xScale = d3ScaleLinear()
-      .domain(d3ArrayExtent(plotData, d => d.x))
-      .range([0, width - padding.right - padding.left])
+      .domain(d3Extent(plotData, d => d.x))
+      .range([0, width - margin.right - margin.left])
       .nice();
 
     const yScale = d3ScaleLinear()
-      .domain(d3ArrayExtent(plotData, d => d.y))
-      .range([height - padding.top - padding.bottom, 0])
+      .domain(d3Extent(plotData, d => d.y))
+      .range([height - margin.top - margin.bottom, 0])
       .nice();
 
     return {
+      data,
       plotData,
       xScale,
       yScale
@@ -76,8 +77,8 @@ class RobinExample extends React.Component {
     console.log('render');
 
     const {entities} = this.props;
-    const {xScale, yScale} = this.state;
     const data = entities.iris;
+    const {plotData, xScale, yScale} = this.state;
 
     return (
       <div className="robin-example">
@@ -86,7 +87,7 @@ class RobinExample extends React.Component {
             <RobinChart
               width={width}
               height={height}
-              padding={padding}
+              padding={margin}
               theme={theme}
             >
               <RobinAxis
@@ -99,6 +100,20 @@ class RobinExample extends React.Component {
                 scale={xScale}
                 label="Sepal width (cm)"
               />
+              <g className="scatter">
+                {plotData.map((d, i) => (
+                  <circle
+                    key={d.index}
+                    cx={xScale(d.x)}
+                    cy={yScale(d.y)}
+                    r={3.5}
+                    style={{
+                      fill: d.color,
+                      opacity: 1
+                    }}
+                  />
+                ))}
+              </g>
             </RobinChart>
           </div>
         </div>
