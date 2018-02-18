@@ -38,6 +38,11 @@ class D3Example extends React.Component {
 
     this.handleMouseMove = this.handleMouseMove.bind(this);
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.computeChartState(nextProps));
+  }
+
   computeChartState(props) {
     const {entities} = props;
 
@@ -117,6 +122,7 @@ class D3Example extends React.Component {
       // trendline
     };
   }
+
   handleMouseMove(e) {
     const padding = {top: 20, right: 20, bottom: 30, left: 40};
 
@@ -141,9 +147,7 @@ class D3Example extends React.Component {
       this.setState({hoverIndex: nextHoverIndex});
     }
   }
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.computeChartState(nextProps));
-  }
+
   render() {
     console.log('render');
 

@@ -101,6 +101,10 @@ class VictoryCalendarHeatmap extends React.Component {
     this.state = Object.assign({}, this.computeState(props));
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.computeState(nextProps));
+  }
+
   computeState(props) {
     const {entities} = props;
 
@@ -154,10 +158,6 @@ class VictoryCalendarHeatmap extends React.Component {
     return {
       plotData
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.computeState(nextProps));
   }
 
   render() {

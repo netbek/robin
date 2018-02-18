@@ -49,6 +49,10 @@ class RobinAxis extends React.Component {
     this.state = Object.assign({}, this.computeState(props));
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.computeState(nextProps));
+  }
+
   computeState(props) {
     const {
       chartPadding,
@@ -93,13 +97,9 @@ class RobinAxis extends React.Component {
     axis.scale(scale).ticks(tickCount);
 
     return {
-      axis,
+      axis: axis,
       theme: computedTheme
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.computeState(nextProps));
   }
 
   render() {

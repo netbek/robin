@@ -63,7 +63,7 @@ class RobinChart extends React.Component {
         >
           {React.Children.map(children, child =>
             React.cloneElement(child, {
-              theme,
+              theme: theme,
               chartWidth: computedTheme.width,
               chartHeight: computedTheme.height,
               chartPadding: computedTheme.padding

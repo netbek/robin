@@ -26,6 +26,10 @@ class AirQuality extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.loadData();
+  }
+
   loadData() {
     const setState = this.setState.bind(this);
 
@@ -82,10 +86,6 @@ class AirQuality extends React.Component {
         )
       });
     });
-  }
-
-  componentDidMount() {
-    this.loadData();
   }
 
   renderEmpty() {}

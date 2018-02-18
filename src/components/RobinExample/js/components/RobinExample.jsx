@@ -36,6 +36,10 @@ class RobinExample extends React.Component {
     this.state = Object.assign({}, this.computeState(props));
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.computeState(nextProps));
+  }
+
   computeState(props) {
     const {entities} = props;
     const data = entities.iris;
@@ -66,10 +70,6 @@ class RobinExample extends React.Component {
       xScale,
       yScale
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.computeState(nextProps));
   }
 
   render() {
