@@ -1,0 +1,101 @@
+@import 'src/css/helpers';
+
+.plot--semiotic {
+  svg.visualization-layer {
+    border: 1px solid lightgray;
+  }
+
+  .data-visualization {
+    .axis-labels {
+      .axis-baseline {
+        fill: transparent;
+        stroke: black;
+        stroke-width: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        shape-rendering: crispEdges;
+      }
+
+      text {
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 12px;
+        fill: black;
+      }
+    }
+
+    .axis-tick-lines {
+      .x {
+        .tick-line {
+          fill: transparent;
+          // stroke: lightgray;
+          stroke: none;
+          stroke-width: 1;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          shape-rendering: crispEdges;
+        }
+      }
+
+      .y {
+        .tick-line {
+          fill: transparent;
+          // stroke: lightgray;
+          stroke: none;
+          stroke-width: 1;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          shape-rendering: crispEdges;
+        }
+      }
+    }
+  }
+
+  .annotation-layer {
+    .legend-title {
+      + line {
+        fill: transparent;
+        stroke: black;
+        stroke-width: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        shape-rendering: crispEdges;
+      }
+    }
+
+    .legend-title,
+    .legend-item {
+      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      font-size: 12px;
+      fill: black;
+    }
+
+    .tooltip-content {
+      background: white;
+      border: 1px solid gray;
+      border-radius: 3px;
+      color: black;
+      padding: 10px;
+      z-index: 999999;
+      min-width: 12em;
+      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      font-size: 12px;
+      fill: black;
+
+      dl {
+        margin: 0 auto;
+
+        dt {
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+
+        dd {
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,92 +1,29 @@
 @import 'src/css/helpers';
 
-.data-visualization {
-  .axis-labels {
-    .axis-baseline {
-      fill: transparent;
-      stroke: black;
-      stroke-width: 1;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      shape-rendering: crispEdges;
-    }
+@import 'PlotSemiotic';
+@import 'PlotVictory';
 
-    text {
-      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-      font-size: 12px;
-      fill: black;
-    }
-  }
-
-  .axis-tick-lines {
-    .x {
-      .tick-line {
-        fill: transparent;
-        stroke: lightgray;
-        stroke-width: 1;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        shape-rendering: crispEdges;
-      }
-    }
-
-    .y {
-      .tick-line {
-        fill: transparent;
-        stroke: lightgray;
-        stroke-width: 1;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        shape-rendering: crispEdges;
-      }
-    }
-  }
+body {
+  padding: 1em;
 }
 
-.annotation-layer {
-  .legend-title {
-    + line {
-      fill: transparent;
-      stroke: black;
-      stroke-width: 1;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      shape-rendering: crispEdges;
-    }
+.constraint {
+  margin: 0 auto;
+  max-width: 80em;
+}
+
+.plot {
+  margin: 1em auto;
+}
+
+@include breakpoint(80em) {
+  .plots {
+    display: flex;
+    flex-flow: row nowrap;
   }
 
-  .legend-title,
-  .legend-item {
-    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-    font-size: 12px;
-    fill: black;
-  }
-
-  .tooltip-content {
-    background: white;
-    border: 1px solid black;
-    color: black;
-    padding: 10px;
-    z-index: 999999;
-    min-width: 12em;
-    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-    font-size: 12px;
-    fill: black;
-
-    dl {
-      margin: 0 auto;
-
-      dt {
-        &:first-child {
-          margin-top: 0;
-        }
-      }
-
-      dd {
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
+  .plot {
+    flex: 0 0 50%;
+    margin: 0;
   }
 }
