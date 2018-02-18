@@ -99,7 +99,7 @@ class Iris extends React.Component {
               htmlFor="xAccessor"
               className="col-form-label col-form-label-sm"
             >
-              xAccessor:
+              x:
             </label>
             <select
               id="xAccessor"
@@ -122,7 +122,7 @@ class Iris extends React.Component {
               htmlFor="yAccessor"
               className="col-form-label col-form-label-sm"
             >
-              yAccessor:
+              y:
             </label>
             <select
               id="yAccessor"
