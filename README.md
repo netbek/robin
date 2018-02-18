@@ -40,6 +40,11 @@ Plugins can be installed from the command line. To install a few useful ones:
 
 ## Resources
 
+### Datasets
+
+* [@vincentarelbundock/Rdatasets](https://github.com/vincentarelbundock/Rdatasets)
+* [@awesomedata/awesome-public-datasets](https://github.com/awesomedata/awesome-public-datasets)
+
 ### Dataviz
 
 * [@fasouto/awesome-dataviz](https://github.com/fasouto/awesome-dataviz)
