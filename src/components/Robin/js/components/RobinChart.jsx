@@ -56,8 +56,9 @@ class RobinChart extends React.Component {
       >
         <g
           style={{
-            transform: `translate(${computedTheme.padding
-              .left}px,${computedTheme.padding.top}px)`
+            transform: `translate(${computedTheme.padding.left}px,${
+              computedTheme.padding.top
+            }px)`
           }}
         >
           {React.Children.map(children, child =>
