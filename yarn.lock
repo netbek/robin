@@ -2224,7 +2224,7 @@ d3-force@1.0.2:
     d3-quadtree "1"
     d3-timer "1"
 
-d3-format@1:
+d3-format@1, d3-format@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.2.2.tgz#1a39c479c8a57fe5051b2e67a3bee27061a74e7a"
 
@@ -7956,7 +7956,7 @@ selfsigned@^1.9.1:
   dependencies:
     node-forge "0.7.1"
 
-semiotic-mark@0.1.2:
+semiotic-mark@0.1.2, semiotic-mark@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/semiotic-mark/-/semiotic-mark-0.1.2.tgz#0dfd375b001fdb939ec61d20b0016e6715f87e10"
   dependencies:
