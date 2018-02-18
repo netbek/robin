@@ -7,7 +7,8 @@ import PlotVictory from './PlotVictory';
 
 class Iris extends React.Component {
   static propTypes = {
-    margin: PropTypes.object
+    margin: PropTypes.object,
+    accessors: PropTypes.array
   };
 
   static defaultProps = {
@@ -16,14 +17,17 @@ class Iris extends React.Component {
       right: 20,
       bottom: 60,
       left: 60
-    }
+    },
+    accessors: ['sepalLength', 'sepalWidth', 'petalLength', 'petalWidth']
   };
 
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
-      plotData: []
+      plotData: [],
+      xAccessor: props.accessors[0],
+      yAccessor: props.accessors[1]
     };
 
     this.setState = this.setState.bind(this);
@@ -70,9 +74,15 @@ class Iris extends React.Component {
     });
   }
 
+  handleAccessorChange(axis, e) {
+    this.setState({[axis + 'Accessor']: e.target.value});
+  }
+
   render() {
-    const {margin} = this.props;
-    const {plotData} = this.state;
+    const {margin, accessors} = this.props;
+    const {plotData, xAccessor, yAccessor} = this.state;
+    const handleXAccessorChange = this.handleAccessorChange.bind(this, 'x');
+    const handleYAccessorChange = this.handleAccessorChange.bind(this, 'y');
 
     return (
       <div>
@@ -83,9 +93,68 @@ class Iris extends React.Component {
           recreated with Semiotic and Victory.
         </p>
 
+        <form className="form-inline">
+          <div className="form-group">
+            <label
+              htmlFor="xAccessor"
+              className="col-form-label col-form-label-sm"
+            >
+              xAccessor:
+            </label>
+            <select
+              id="xAccessor"
+              className="form-control form-control-sm"
+              onChange={handleXAccessorChange}
+            >
+              {accessors.map(d => (
+                <option
+                  value={d}
+                  selected={d === xAccessor}
+                  disabled={d === yAccessor}
+                >
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label
+              htmlFor="yAccessor"
+              className="col-form-label col-form-label-sm"
+            >
+              yAccessor:
+            </label>
+            <select
+              id="yAccessor"
+              className="form-control form-control-sm"
+              onChange={handleYAccessorChange}
+            >
+              {accessors.map(d => (
+                <option
+                  value={d}
+                  selected={d === yAccessor}
+                  disabled={d === xAccessor}
+                >
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
+        </form>
+
         <div className="plots">
-          <PlotSemiotic margin={margin} data={plotData} />
-          <PlotVictory margin={margin} data={plotData} />
+          <PlotSemiotic
+            data={plotData}
+            margin={margin}
+            xAccessor={xAccessor}
+            yAccessor={yAccessor}
+          />
+          <PlotVictory
+            data={plotData}
+            margin={margin}
+            xAccessor={xAccessor}
+            yAccessor={yAccessor}
+          />
         </div>
       </div>
     );

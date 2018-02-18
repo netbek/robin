@@ -12,6 +12,18 @@ body {
   max-width: 80em;
 }
 
+.form-inline {
+  margin: 1em auto;
+
+  label {
+    margin-right: .25em;
+  }
+
+  .form-group {
+    margin-right: 2em;
+  }
+}
+
 .plot {
   margin: 1em auto;
 }

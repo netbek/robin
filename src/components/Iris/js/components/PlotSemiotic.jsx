@@ -14,7 +14,9 @@ import {Mark} from 'semiotic-mark';
 class PlotSemiotic extends React.Component {
   static propTypes = {
     data: PropTypes.array,
-    margin: PropTypes.object
+    margin: PropTypes.object,
+    xAccessor: PropTypes.string.isRequired,
+    yAccessor: PropTypes.string.isRequired
   };
 
   static defaultProps = {
@@ -28,7 +30,7 @@ class PlotSemiotic extends React.Component {
   };
 
   render() {
-    const {margin, data} = this.props;
+    const {data, margin, xAccessor, yAccessor} = this.props;
 
     if (!data) {
       return null;
@@ -67,6 +69,8 @@ class PlotSemiotic extends React.Component {
     return (
       <div className="plot plot--semiotic">
         <XYFrame
+          renderKey={(d, i) => `${d.id || i}-${xAccessor}-${yAccessor}`}
+          title="Iris"
           size={[plotWidth, plotHeight]}
           margin={margin}
           customPointMark={d => <Mark markType="circle" r={3.5} />}
@@ -76,17 +80,17 @@ class PlotSemiotic extends React.Component {
             stroke: 'none',
             strokeWidth: 1
           })}
-          xAccessor="sepalWidth"
-          yAccessor="sepalLength"
+          xAccessor={xAccessor}
+          yAccessor={yAccessor}
           axes={[
             {
               orient: 'left',
-              label: 'Sepal length (cm)',
+              label: `${xAccessor}`,
               tickFormat: d => d3Format('.1f')(d)
             },
             {
               orient: 'bottom',
-              label: 'Sepal width (cm)',
+              label: `${yAccessor}`,
               tickFormat: d => d3Format('.1f')(d)
             }
           ]}
@@ -99,14 +103,14 @@ class PlotSemiotic extends React.Component {
           tooltipContent={d => (
             <div className="tooltip-content">
               <dl>
-                <dt>Species</dt>
+                <dt>species</dt>
                 <dd>{d.species}</dd>
 
-                <dt>Sepal length (cm)</dt>
-                <dd>{d.sepalLength}</dd>
+                <dt>{xAccessor}</dt>
+                <dd>{d[xAccessor]}</dd>
 
-                <dt>Sepal width (cm)</dt>
-                <dd>{d.sepalWidth}</dd>
+                <dt>{yAccessor}</dt>
+                <dd>{d[yAccessor]}</dd>
               </dl>
             </div>
           )}

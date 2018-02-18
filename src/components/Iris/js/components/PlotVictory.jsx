@@ -22,7 +22,9 @@ import theme from '../theme';
 class PlotVictory extends React.Component {
   static propTypes = {
     data: PropTypes.array,
-    margin: PropTypes.object
+    margin: PropTypes.object,
+    xAccessor: PropTypes.string.isRequired,
+    yAccessor: PropTypes.string.isRequired
   };
 
   static defaultProps = {
@@ -36,7 +38,7 @@ class PlotVictory extends React.Component {
   };
 
   render() {
-    const {margin, data} = this.props;
+    const {data, margin, xAccessor, yAccessor} = this.props;
 
     if (!data) {
       return null;
@@ -67,9 +69,15 @@ class PlotVictory extends React.Component {
           height={plotHeight}
           padding={margin}
           theme={theme}
+          animate={{
+            duration: 500,
+            onLoad: {duration: 0},
+            onEnter: {duration: 0},
+            onExit: {duration: 0}
+          }}
         >
           <VictoryAxis
-            label="Sepal width (cm)"
+            label={yAccessor}
             style={{
               grid: {
                 fill: 'none',
@@ -78,7 +86,7 @@ class PlotVictory extends React.Component {
             }}
           />
           <VictoryAxis
-            label="Sepal length (cm)"
+            label={xAccessor}
             style={{
               grid: {
                 fill: 'none',
@@ -106,12 +114,12 @@ class PlotVictory extends React.Component {
             }}
             size={3.5}
             data={data}
-            x="sepalWidth"
-            y="sepalLength"
+            x={xAccessor}
+            y={yAccessor}
             labels={d =>
-              `Species: ${d.species}\nSepal length: ${
-                d.sepalLength
-              }\nSepal width: ${d.sepalWidth}`
+              `species: ${d.species}\n${xAccessor}: ${
+                d[xAccessor]
+              }\n${yAccessor}: ${d[yAccessor]}`
             }
             labelComponent={<VictoryTooltip {...theme.tooltip} />}
           />
