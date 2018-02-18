@@ -343,7 +343,7 @@ gulp.task('webpack-dev-server', function(cb) {
 
   new webpackDevServer(compiler, {
     hot: true,
-    quiet: true
+    quiet: false
   }).listen(8080, 'localhost', function(err) {
     if (err) {
       throw new gutil.PluginError('webpack-dev-server', err);

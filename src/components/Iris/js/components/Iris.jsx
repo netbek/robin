@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types';
+import _ from 'lodash';
 import React from 'react';
-// import loadAndParse from '../utils/jqLoadAndParse';
-import loadAndParse from '../utils/papaLoadAndParse';
+import loadAndParse from 'utils/papaLoadAndParse';
 
-class AirQuality extends React.Component {
-  loadIris() {
-    const url = '/node_modules/rdatasets/csv/datasets/iris.csv';
+class Iris extends React.Component {
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData() {
+    const url = '/data/rdatasets/csv/datasets/iris.csv';
 
     // See http://papaparse.com/docs#config for description of CSV parser config.
     const config = {
@@ -37,13 +40,9 @@ class AirQuality extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.loadIris();
-  }
-
   render() {
     return <div>@todo Add table</div>;
   }
 }
 
-export default AirQuality;
+export default Iris;
