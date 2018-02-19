@@ -28,13 +28,14 @@ function urlToFilename(url) {
 function get(url) {
   const file = path.join(CACHE_DIR, urlToFilename(url));
   const dirname = path.dirname(file);
+  const filename = path.basename(file);
 
   return fs.pathExists(file).then(function(exists) {
     if (!exists) {
       return fs
         .ensureDir(dirname)
         .then(function() {
-          return download(url, dirname);
+          return download(url, dirname, {filename: filename});
         })
         .then(function() {
           return Promise.resolve(file);
