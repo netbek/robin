@@ -5,7 +5,6 @@ import {scaleOrdinal as d3ScaleOrdinal} from 'd3-scale';
 import {schemeCategory10 as d3SchemeCategory10} from 'd3-scale-chromatic';
 import {Group} from '@vx/group';
 import {AxisBottom, AxisLeft} from '@vx/axis';
-import {RectClipPath} from '@vx/clip-path';
 import {scaleLinear} from '@vx/scale';
 import {getCoordsFromEvent} from '@vx/brush';
 import {voronoi, VoronoiPolygon} from '@vx/voronoi';
@@ -30,13 +29,15 @@ class PlotVx extends Plot {
 
     const xScale = scaleLinear({
       domain: extent(plotData, d => d.x),
-      range: [0, innerWidth]
-    }).nice();
+      range: [0, innerWidth],
+      nice: true
+    });
 
     const yScale = scaleLinear({
       domain: extent(plotData, d => d.y),
-      range: [innerHeight, 0]
-    }).nice();
+      range: [innerHeight, 0],
+      nice: true
+    });
 
     const voronoiDiagram = voronoi({
       x: d => xScale(d.x),
@@ -123,6 +124,13 @@ class PlotVx extends Plot {
     //   />
     // ));
 
+    const unselectedData = selected
+      ? plotData.filter(d => d.id !== selected.data.id)
+      : plotData;
+    const selectedData = selected
+      ? plotData.filter(d => d.id === selected.data.id)
+      : [];
+
     return (
       <div className="plot plot--vx">
         <svg
@@ -177,13 +185,22 @@ class PlotVx extends Plot {
               fill="transparent"
               stroke="none"
             />
-            {plotData.map(d => (
+            {unselectedData.map(d => (
               <circle
                 key={`circle-${d.id}`}
-                r={selected && d.id === selected.data.id ? 5 : 3.5}
+                r={3.5}
                 cx={xScale(d.x)}
                 cy={yScale(d.y)}
-                fill={selected && d.id === selected.data.id ? '#000' : d.fill}
+                fill={d.fill}
+              />
+            ))}
+            {selectedData.map(d => (
+              <circle
+                key={`circle-${d.id}`}
+                r={5}
+                cx={xScale(d.x)}
+                cy={yScale(d.y)}
+                fill={'#000'}
               />
             ))}
           </Group>
