@@ -2,6 +2,8 @@
 
 .plot--victory {
   .VictoryContainer {
-    border: 1px solid lightgray;
+    > svg {
+      border: 1px solid lightgray;
+    }
   }
 }

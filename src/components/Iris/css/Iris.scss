@@ -2,6 +2,7 @@
 
 @import 'PlotSemiotic';
 @import 'PlotVictory';
+@import 'PlotVx';
 
 body {
   padding: 1em;
@@ -9,7 +10,7 @@ body {
 
 .constraint {
   margin: 0 auto;
-  max-width: 80em;
+  max-width: 75em;
 }
 
 .form-inline {
@@ -28,14 +29,14 @@ body {
   margin: 1em auto;
 }
 
-@include breakpoint(80em) {
+@include breakpoint(75em) {
   .plots {
     display: flex;
     flex-flow: row nowrap;
   }
 
   .plot {
-    flex: 0 0 50%;
+    flex: 0 0 25em;
     margin: 0;
   }
 }

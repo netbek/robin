@@ -21,6 +21,7 @@
     "url": "https://github.com/netbek/robin/issues"
   },
   "dependencies": {
+    "@vx/vx": "^0.0.158",
     "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",

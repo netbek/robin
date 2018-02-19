@@ -1,6 +1,4 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
 import {extent as d3Extent} from 'd3-array';
 import {format as d3Format} from 'd3-format';
 import {
@@ -10,37 +8,18 @@ import {
 import {schemeCategory10 as d3SchemeCategory10} from 'd3-scale-chromatic';
 import {XYFrame} from 'semiotic';
 import {Mark} from 'semiotic-mark';
+import Plot from './Plot';
 
-class PlotSemiotic extends React.Component {
-  static propTypes = {
-    data: PropTypes.array,
-    margin: PropTypes.object,
-    xAccessor: PropTypes.string.isRequired,
-    yAccessor: PropTypes.string.isRequired
-  };
-
-  static defaultProps = {
-    data: [],
-    margin: {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    }
-  };
-
+class PlotSemiotic extends Plot {
   render() {
-    const {data, margin, xAccessor, yAccessor} = this.props;
+    const {data, margin, width, height, xAccessor, yAccessor} = this.props;
 
     if (!data) {
       return null;
     }
 
-    const width = 500;
-    const height = 500;
-
-    const plotWidth = width - margin.left - margin.right;
-    const plotHeight = height - margin.top - margin.bottom;
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
 
     const species = _.uniq(data.map(d => d.species));
 
@@ -71,7 +50,7 @@ class PlotSemiotic extends React.Component {
         <XYFrame
           renderKey={(d, i) => `${d.id || i}-${xAccessor}-${yAccessor}`}
           title="Iris"
-          size={[plotWidth, plotHeight]}
+          size={[innerWidth, innerHeight]}
           margin={margin}
           customPointMark={d => <Mark markType="circle" r={3.5} />}
           points={data}

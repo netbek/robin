@@ -4,10 +4,13 @@ import React from 'react';
 import loadAndParse from 'utils/papaLoadAndParse';
 import PlotSemiotic from './PlotSemiotic';
 import PlotVictory from './PlotVictory';
+import PlotVx from './PlotVx';
 
 class Iris extends React.Component {
   static propTypes = {
     margin: PropTypes.object,
+    width: PropTypes.number,
+    height: PropTypes.number,
     accessors: PropTypes.array
   };
 
@@ -18,6 +21,8 @@ class Iris extends React.Component {
       bottom: 60,
       left: 60
     },
+    width: 400,
+    height: 400,
     accessors: ['sepalLength', 'sepalWidth', 'petalLength', 'petalWidth']
   };
 
@@ -79,7 +84,7 @@ class Iris extends React.Component {
   }
 
   render() {
-    const {margin, accessors} = this.props;
+    const {width, height, margin, accessors} = this.props;
     const {plotData, xAccessor, yAccessor} = this.state;
     const handleXAccessorChange = this.handleAccessorChange.bind(this, 'x');
     const handleYAccessorChange = this.handleAccessorChange.bind(this, 'y');
@@ -87,10 +92,10 @@ class Iris extends React.Component {
     return (
       <div>
         <p>
+          Based on{' '}
           <a href="https://bl.ocks.org/mbostock/3887118" target="_blank">
             bl.ocks.org/mbostock/3887118
-          </a>{' '}
-          recreated with Semiotic and Victory.
+          </a>
         </p>
 
         <form className="form-inline">
@@ -143,14 +148,26 @@ class Iris extends React.Component {
         </form>
 
         <div className="plots">
+          <PlotVx
+            data={plotData}
+            width={width}
+            height={height}
+            margin={margin}
+            xAccessor={xAccessor}
+            yAccessor={yAccessor}
+          />
           <PlotSemiotic
             data={plotData}
+            width={width}
+            height={height}
             margin={margin}
             xAccessor={xAccessor}
             yAccessor={yAccessor}
           />
           <PlotVictory
             data={plotData}
+            width={width}
+            height={height}
             margin={margin}
             xAccessor={xAccessor}
             yAccessor={yAccessor}

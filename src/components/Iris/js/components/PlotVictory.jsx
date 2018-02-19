@@ -1,6 +1,4 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
 import {extent as d3Extent} from 'd3-array';
 import {format as d3Format} from 'd3-format';
 import {
@@ -18,37 +16,18 @@ import {
   VictoryVoronoiContainer
 } from 'victory';
 import theme from '../theme';
+import Plot from './Plot';
 
-class PlotVictory extends React.Component {
-  static propTypes = {
-    data: PropTypes.array,
-    margin: PropTypes.object,
-    xAccessor: PropTypes.string.isRequired,
-    yAccessor: PropTypes.string.isRequired
-  };
-
-  static defaultProps = {
-    data: [],
-    margin: {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    }
-  };
-
+class PlotVictory extends Plot {
   render() {
-    const {data, margin, xAccessor, yAccessor} = this.props;
+    const {data, width, height, margin, xAccessor, yAccessor} = this.props;
 
     if (!data) {
       return null;
     }
 
-    const width = 500;
-    const height = 500;
-
-    const plotWidth = width - margin.left - margin.right;
-    const plotHeight = height - margin.top - margin.bottom;
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
 
     const species = _.uniq(data.map(d => d.species));
 
@@ -65,8 +44,8 @@ class PlotVictory extends React.Component {
       <div className="plot plot--victory">
         <VictoryChart
           containerComponent={<VictoryVoronoiContainer responsive={false} />}
-          width={plotWidth}
-          height={plotHeight}
+          width={innerWidth}
+          height={innerHeight}
           padding={margin}
           theme={theme}
           animate={{
@@ -96,7 +75,7 @@ class PlotVictory extends React.Component {
             dependentAxis
           />
           <VictoryLegend
-            x={plotWidth - legendWidth}
+            x={innerWidth - legendWidth}
             y={margin.top}
             width={legendWidth}
             title="Species"
