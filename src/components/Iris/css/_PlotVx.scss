@@ -4,4 +4,14 @@
   > svg {
     border: 1px solid lightgray;
   }
+
+  .vx-axis-line {
+    shape-rendering: crispEdges;
+  }
+
+  .vx-axis-tick {
+    .vx-line {
+      shape-rendering: crispEdges;
+    }
+  }
 }

@@ -25,6 +25,12 @@ body {
   }
 }
 
+select {
+  option:disabled {
+    color: lightgray;
+  }
+}
+
 .plot {
   margin: 1em auto;
 }

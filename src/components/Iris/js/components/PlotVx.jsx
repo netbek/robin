@@ -4,7 +4,7 @@ import {extent} from 'd3-array';
 import {scaleOrdinal as d3ScaleOrdinal} from 'd3-scale';
 import {schemeCategory10 as d3SchemeCategory10} from 'd3-scale-chromatic';
 import {Group} from '@vx/group';
-import {GradientOrangeRed, GradientPinkRed} from '@vx/gradient';
+import {AxisBottom, AxisLeft} from '@vx/axis';
 import {RectClipPath} from '@vx/clip-path';
 import {scaleLinear} from '@vx/scale';
 import {getCoordsFromEvent} from '@vx/brush';
@@ -100,7 +100,7 @@ class PlotVx extends Plot {
   }
 
   render() {
-    const {width, height, margin} = this.props;
+    const {width, height, margin, xAccessor, yAccessor} = this.props;
 
     const {
       plotData,
@@ -115,6 +115,8 @@ class PlotVx extends Plot {
 
     const polygons = voronoiDiagram.polygons();
 
+    console.log('x', xAccessor, 'y', yAccessor);
+
     return (
       <div className="plot plot--vx">
         <svg
@@ -124,13 +126,31 @@ class PlotVx extends Plot {
             this.svg = ref;
           }}
         >
-          <GradientOrangeRed id="voronoi_orange_red" />
-          <GradientPinkRed id="voronoi_pink_red" />
+          <AxisLeft
+            label={yAccessor}
+            top={margin.top}
+            left={margin.left}
+            scale={yScale}
+            tickLabelProps={(value, index) => ({
+              fontSize: 11,
+              textAnchor: 'end',
+              dy: '0.33em'
+            })}
+          />
+          <AxisBottom
+            label={xAccessor}
+            top={height - margin.bottom}
+            left={margin.left}
+            scale={xScale}
+            tickLabelProps={(value, index) => ({
+              fontSize: 11,
+              textAnchor: 'middle'
+            })}
+          />
           <RectClipPath
             id="voronoi_clip"
             width={innerWidth}
             height={innerHeight}
-            rx={14}
           />
           <Group
             top={margin.top}
