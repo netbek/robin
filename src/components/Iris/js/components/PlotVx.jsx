@@ -31,12 +31,12 @@ class PlotVx extends Plot {
     const xScale = scaleLinear({
       domain: extent(plotData, d => d.x),
       range: [0, innerWidth]
-    });
+    }).nice();
 
     const yScale = scaleLinear({
       domain: extent(plotData, d => d.y),
       range: [innerHeight, 0]
-    });
+    }).nice();
 
     const voronoiDiagram = voronoi({
       x: d => xScale(d.x),
@@ -86,16 +86,15 @@ class PlotVx extends Plot {
       neighborRadius
     );
 
+    // const {x, y} = localPoint(this._svg, event);
+    //
+    // showTooltip({
+    //   tooltipLeft: x,
+    //   tooltipTop: y
+    // });
+
     if (closest) {
-      const neighbors = {};
-      const cell = voronoiDiagram.cells[closest.index];
-      cell.halfedges.forEach(index => {
-        const edge = voronoiDiagram.edges[index];
-        const {left, right} = edge;
-        if (left && left !== closest) neighbors[left.data.id] = true;
-        else if (right && right !== closest) neighbors[right.data.id] = true;
-      });
-      this.setState({selected: closest, neighbors: neighbors});
+      this.setState({selected: closest});
     }
   }
 
@@ -104,18 +103,25 @@ class PlotVx extends Plot {
 
     const {
       plotData,
-      voronoiDiagram,
+      // voronoiDiagram,
       innerWidth,
       innerHeight,
       xScale,
       yScale,
-      selected,
-      neighbors
+      selected
     } = this.state;
 
-    const polygons = voronoiDiagram.polygons();
-
-    console.log('x', xAccessor, 'y', yAccessor);
+    // const polygons = voronoiDiagram.polygons();
+    // const voronoiDebugPolygons = polygons.map(polygon => (
+    //   <VoronoiPolygon
+    //     key={`polygon-${polygon.data.id}`}
+    //     polygon={polygon}
+    //     fill="#000"
+    //     fillOpacity={0}
+    //     stroke="#f00"
+    //     strokeWidth={1}
+    //   />
+    // ));
 
     return (
       <div className="plot plot--vx">
@@ -126,51 +132,51 @@ class PlotVx extends Plot {
             this.svg = ref;
           }}
         >
-          <AxisLeft
-            label={yAccessor}
-            top={margin.top}
-            left={margin.left}
-            scale={yScale}
-            tickLabelProps={(value, index) => ({
-              fontSize: 11,
-              textAnchor: 'end',
-              dy: '0.33em'
-            })}
-          />
           <AxisBottom
             label={xAccessor}
+            labelProps={Object.assign({}, theme.axis.style.axisLabel)}
             top={height - margin.bottom}
             left={margin.left}
             scale={xScale}
-            tickLabelProps={(value, index) => ({
-              fontSize: 11,
-              textAnchor: 'middle'
-            })}
+            tickLength={5}
+            tickLabelProps={(d, i) =>
+              Object.assign({}, theme.axis.style.tickLabels, {
+                dy: '0.25em',
+                textAnchor: 'middle'
+              })
+            }
           />
-          <RectClipPath
-            id="voronoi_clip"
-            width={innerWidth}
-            height={innerHeight}
+          <AxisLeft
+            label={yAccessor}
+            labelProps={Object.assign({}, theme.axis.style.axisLabel)}
+            top={margin.top}
+            left={margin.left}
+            scale={yScale}
+            tickLength={5}
+            tickLabelProps={(d, i) =>
+              Object.assign({}, theme.axis.style.tickLabels, {
+                dx: '-0.25em',
+                dy: '0.25em',
+                textAnchor: 'end'
+              })
+            }
           />
           <Group
             top={margin.top}
             left={margin.left}
-            clipPath="url(#voronoi_clip)"
             onMouseMove={this.handleMouseMove}
             onMouseLeave={() => {
-              this.setState({selected: null, neighbors: null});
+              this.setState({selected: null});
             }}
           >
-            {polygons.map(polygon => (
-              <VoronoiPolygon
-                key={`polygon-${polygon.data.id}`}
-                polygon={polygon}
-                fill="#fff"
-                fillOpacity={0}
-                stroke="#f00"
-                strokeWidth={1}
-              />
-            ))}
+            <rect
+              x={0}
+              y={0}
+              width={innerWidth}
+              height={innerHeight}
+              fill="transparent"
+              stroke="none"
+            />
             {plotData.map(d => (
               <circle
                 key={`circle-${d.id}`}

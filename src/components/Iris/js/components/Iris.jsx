@@ -2,8 +2,8 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import loadAndParse from 'utils/papaLoadAndParse';
-import PlotSemiotic from './PlotSemiotic';
-import PlotVictory from './PlotVictory';
+// import PlotSemiotic from './PlotSemiotic';
+// import PlotVictory from './PlotVictory';
 import PlotVx from './PlotVx';
 
 class Iris extends React.Component {
@@ -156,25 +156,26 @@ class Iris extends React.Component {
             xAccessor={xAccessor}
             yAccessor={yAccessor}
           />
-          <PlotSemiotic
-            data={plotData}
-            width={width}
-            height={height}
-            margin={margin}
-            xAccessor={xAccessor}
-            yAccessor={yAccessor}
-          />
-          <PlotVictory
-            data={plotData}
-            width={width}
-            height={height}
-            margin={margin}
-            xAccessor={xAccessor}
-            yAccessor={yAccessor}
-          />
         </div>
       </div>
     );
+
+    // <PlotSemiotic
+    //   data={plotData}
+    //   width={width}
+    //   height={height}
+    //   margin={margin}
+    //   xAccessor={xAccessor}
+    //   yAccessor={yAccessor}
+    // />
+    // <PlotVictory
+    //   data={plotData}
+    //   width={width}
+    //   height={height}
+    //   margin={margin}
+    //   xAccessor={xAccessor}
+    //   yAccessor={yAccessor}
+    // />
   }
 }
 

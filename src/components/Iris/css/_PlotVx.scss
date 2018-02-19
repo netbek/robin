@@ -6,11 +6,21 @@
   }
 
   .vx-axis-line {
+    fill: transparent;
+    stroke: black;
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     shape-rendering: crispEdges;
   }
 
   .vx-axis-tick {
     .vx-line {
+      fill: transparent;
+      stroke: black;
+      stroke-width: 1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
       shape-rendering: crispEdges;
     }
   }
