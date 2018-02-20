@@ -8,6 +8,7 @@ import {AxisBottom, AxisLeft} from '@vx/axis';
 import {scaleLinear} from '@vx/scale';
 import {getCoordsFromEvent} from '@vx/brush';
 import {voronoi, VoronoiPolygon} from '@vx/voronoi';
+import {withTooltip, Tooltip, TooltipWithBounds} from '@vx/tooltip';
 import theme from '../theme';
 import Plot from './Plot';
 
@@ -77,7 +78,7 @@ class PlotVx extends Plot {
   }
 
   handleMouseMove(event) {
-    const {margin} = this.props;
+    const {margin, showTooltip} = this.props;
     const {voronoiDiagram} = this.state;
     const {x, y} = getCoordsFromEvent(this.svg, event);
 
@@ -96,11 +97,28 @@ class PlotVx extends Plot {
 
     if (closest) {
       this.setState({selected: closest});
+
+      // console.log(this.tooltip.getRects());
+
+      showTooltip({
+        tooltipData: closest.data,
+        tooltipLeft: closest[0] + margin.left,
+        tooltipTop: closest[1] + margin.top
+      });
     }
   }
 
   render() {
     const {width, height, margin, xAccessor, yAccessor} = this.props;
+
+    const {
+      tooltipOpen,
+      tooltipLeft,
+      tooltipTop,
+      tooltipData,
+      showTooltip,
+      hideTooltip
+    } = this.props;
 
     const {
       plotData,
@@ -175,6 +193,7 @@ class PlotVx extends Plot {
             onMouseMove={this.handleMouseMove}
             onMouseLeave={() => {
               this.setState({selected: null});
+              hideTooltip();
             }}
           >
             <rect
@@ -205,27 +224,56 @@ class PlotVx extends Plot {
             ))}
           </Group>
         </svg>
+
+        {tooltipOpen && (
+          <TooltipWithBounds
+            ref={ref => {
+              this.tooltip = ref;
+            }}
+            top={tooltipTop}
+            left={tooltipLeft}
+            style={{backgroundColor: '#283238', color: 'white'}}
+          >
+            <div>I'm a very long tooltip</div>
+          </TooltipWithBounds>
+        )}
       </div>
     );
   }
 }
 
-export default ({
-  width,
-  height,
-  margin,
-  data,
-  events,
-  xAccessor,
-  yAccessor
-}) => (
-  <PlotVx
-    width={width}
-    height={height}
-    margin={margin}
-    data={data}
-    events={events}
-    xAccessor={xAccessor}
-    yAccessor={yAccessor}
-  />
+export default withTooltip(
+  ({
+    width,
+    height,
+    margin,
+    data,
+    events,
+    xAccessor,
+    yAccessor,
+    tooltipOpen,
+    tooltipLeft,
+    tooltipTop,
+    tooltipData,
+    showTooltip,
+    hideTooltip
+  }) => (
+    <PlotVx
+      {...{
+        width,
+        height,
+        margin,
+        data,
+        events,
+        xAccessor,
+        yAccessor,
+        tooltipOpen,
+        tooltipLeft,
+        tooltipTop,
+        tooltipData,
+        showTooltip,
+        hideTooltip
+      }}
+    />
+  )
 );
