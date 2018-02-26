@@ -319,31 +319,27 @@ gulp.task('webpack-dev-server', function(cb) {
       return;
     }
 
-    gutil.log(
-      '[webpack]',
-      stats.toString({
-        colors: gutil.colors.supportsColor,
-        hash: false,
-        timings: false,
-        chunks: false,
-        chunkModules: false,
-        modules: false,
-        children: true,
-        version: true,
-        cached: false,
-        cachedAssets: false,
-        reasons: false,
-        source: false,
-        errorDetails: false
-      })
-    );
-
     server.refresh(livereloadOpen);
   });
 
   new webpackDevServer(compiler, {
     hot: true,
-    quiet: false
+    quiet: false,
+    stats: {
+      colors: gutil.colors.supportsColor,
+      hash: false,
+      timings: false,
+      chunks: false,
+      chunkModules: false,
+      modules: false,
+      children: true,
+      version: true,
+      cached: false,
+      cachedAssets: false,
+      reasons: false,
+      source: false,
+      errorDetails: false
+    }
   }).listen(8080, 'localhost', function(err) {
     if (err) {
       throw new gutil.PluginError('webpack-dev-server', err);
