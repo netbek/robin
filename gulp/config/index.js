@@ -18,7 +18,6 @@ module.exports = {
         'node_modules/bourbon/app/assets/stylesheets/',
         'node_modules/breakpoint-sass/stylesheets/',
         'node_modules/mathsass/dist/',
-        'node_modules/modernizr-mixin/stylesheets/',
         'node_modules/sass-color-helpers/stylesheets/',
         'node_modules/singularitygs/stylesheets/',
         'src/css'
