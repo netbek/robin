@@ -1,17 +1,34 @@
 import _ from 'lodash';
+import dl from 'datalib';
 import PropTypes from 'prop-types';
 import React from 'react';
-import loadAndParse from 'utils/papaLoadAndParse';
 // import PlotSemiotic from './PlotSemiotic';
 // import PlotVictory from './PlotVictory';
 import PlotVx from './PlotVx';
+
+function parse(data) {
+  const fieldNames = data.length ? _.keys(data[0]).slice(1) : [];
+
+  const formattedFieldNames = fieldNames.map(d => _.camelCase(d));
+
+  return data.map(d =>
+    _.zipObject(
+      formattedFieldNames,
+      fieldNames.map(
+        fieldName =>
+          fieldName === 'Species' ? d[fieldName] : Number(d[fieldName])
+      )
+    )
+  );
+}
 
 class Iris extends React.Component {
   static propTypes = {
     margin: PropTypes.object,
     width: PropTypes.number,
     height: PropTypes.number,
-    accessors: PropTypes.array
+    accessors: PropTypes.array,
+    url: PropTypes.string
   };
 
   static defaultProps = {
@@ -23,7 +40,8 @@ class Iris extends React.Component {
     },
     width: 400,
     height: 400,
-    accessors: ['sepalLength', 'sepalWidth', 'petalLength', 'petalWidth']
+    accessors: ['sepalLength', 'sepalWidth', 'petalLength', 'petalWidth'],
+    url: '/data/rdatasets/csv/datasets/iris.csv'
   };
 
   constructor(props) {
@@ -44,36 +62,15 @@ class Iris extends React.Component {
 
   loadData() {
     const {setState} = this;
+    const {url} = this.props;
 
-    const url = '/data/rdatasets/csv/datasets/iris.csv';
+    dl.csv(url, function(err, data) {
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-    // See http://papaparse.com/docs#config for description of CSV parser config.
-    const config = {
-      header: true,
-      skipEmptyLines: true
-    };
-
-    function clean(data) {
-      const fieldNames = data.length ? _.keys(data[0]).slice(1) : [];
-
-      const formattedFieldNames = fieldNames.map(function(key) {
-        return _.camelCase(key);
-      });
-
-      return data.map(function(datum) {
-        return _.zipObject(
-          formattedFieldNames,
-          fieldNames.map(function(fieldName) {
-            return fieldName === 'Species'
-              ? datum[fieldName]
-              : Number(datum[fieldName]);
-          })
-        );
-      });
-    }
-
-    loadAndParse(url, config).then(function(data) {
-      const plotData = clean(data);
+      const plotData = parse(data);
 
       setState({plotData});
     });
