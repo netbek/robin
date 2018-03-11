@@ -1,0 +1,15 @@
+@import 'src/css/helpers';
+
+body {
+  padding: 1em;
+}
+
+.constraint {
+  margin: 0 auto;
+  max-width: 75em;
+}
+
+.chart,
+.table {
+  margin: 1.5em auto;
+}

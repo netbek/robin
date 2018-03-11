@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Red List</title>
+    <script src="vendor/modernizr/modernizr.js"></script>
+    <link rel="stylesheet" href="../node_modules/normalize.css/normalize.css"/>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/app.css"/>
+  </head>
+  <body>
+    <main class="constraint">
+      <div class="view" data-entities="{{ data.entities }}" data-env="{{ data.env }}">
+        Loading ...
+      </div>
+    </main>
+    <script src="../node_modules/bluebird/js/browser/bluebird.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/lodash-3/lodash.js"></script>
+    <script src="../node_modules/moment/moment.js"></script>
+    <script src="../node_modules/papaparse/papaparse.js"></script>
+    <script src="../node_modules/velocity-animate/velocity.js"></script>
+    <script src="../node_modules/react/dist/react-with-addons.min.js"></script>
+    <script src="../node_modules/react-dom/dist/react-dom.min.js"></script>
+    <script src="../node_modules/redux/dist/redux.min.js"></script>
+    <script src="../node_modules/redux-thunk/dist/redux-thunk.min.js"></script>
+    <script src="../node_modules/react-redux/dist/react-redux.min.js"></script>
+    <script src="http://localhost:8080/app.js"></script>
+  </body>
+</html>

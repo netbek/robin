@@ -60,6 +60,7 @@ module.exports = {
     directoryListing: false,
     open: '/dist/',
     https: false,
+    fallback: 'dist/index.html', // For SPAs that manipulate browser history
     browsers: {
       default: 'firefox',
       darwin: 'google chrome',
