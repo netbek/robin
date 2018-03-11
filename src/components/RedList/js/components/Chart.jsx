@@ -1,6 +1,10 @@
+/**
+ * Stroke inside hack: https://stackoverflow.com/a/32162431
+ */
+
 import PropTypes from 'prop-types';
 import React from 'react';
-import {geoOrthographic, geoPath} from 'd3-geo';
+import {geoGraticule, geoOrthographic, geoPath} from 'd3-geo';
 import {Orthographic} from '@vx/geo';
 import {PatternLines} from '@vx/pattern';
 import {merge as topojsonMerge} from 'topojson-client';
@@ -12,6 +16,7 @@ class Chart extends React.Component {
   static propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
+    center: PropTypes.arrayOf(PropTypes.number),
     rotate: PropTypes.arrayOf(PropTypes.number),
     colorScale: PropTypes.func
   };
@@ -19,12 +24,13 @@ class Chart extends React.Component {
   static defaultProps = {
     width: 450,
     height: 450,
+    center: [0, 0],
     rotate: [0, 0, 0]
   };
 
   static computeState(props) {
     const {features} = props.data;
-    const {width, height, rotate} = props;
+    const {width, height, center, rotate} = props;
 
     const scale = (width - 2) / 2;
     const translate = [width / 2, height / 2];
@@ -32,6 +38,7 @@ class Chart extends React.Component {
     const projection = geoOrthographic()
       .scale(scale)
       .translate(translate)
+      .center(center)
       .rotate(rotate);
 
     const path = geoPath().projection(projection);
@@ -54,9 +61,10 @@ class Chart extends React.Component {
   }
 
   render() {
-    const {width, height, rotate, colorScale} = this.props;
+    const {width, height, center, rotate, colorScale} = this.props;
     const {data, scale, translate, projection, path} = this.state;
-    const color = '#999';
+    const fill = '#fff';
+    const stroke = '#666';
 
     return (
       <div className="chart" style={{width, height}}>
@@ -65,9 +73,18 @@ class Chart extends React.Component {
             id="dLines"
             height={4}
             width={4}
-            stroke={color}
+            stroke={stroke}
             strokeWidth={1}
             orientation={['diagonal']}
+          />
+
+          <circle
+            r={(width - 2) / 2}
+            cx={width / 2}
+            cy={height / 2}
+            fill="none"
+            stroke={stroke}
+            strokeWidth={1}
           />
 
           <Orthographic
@@ -75,42 +92,44 @@ class Chart extends React.Component {
             scale={scale}
             translate={translate}
             rotate={rotate}
+            center={center}
+            graticule={{
+              step: [15, 15],
+              stroke: stroke,
+              strokeWidth: 1,
+              strokeDasharray: '1,3'
+            }}
             fill="none"
             stroke="none"
-            graticule={{
-              stroke: color,
-              strokeWidth: 1,
-              strokeDasharray: '1,5'
-            }}
           />
 
           {features.map((d, i) => (
-            <path
-              key={`fill-${i}`}
-              d={path(d)}
-              fill="#fff"
-              stroke={color}
-              strokeWidth={1}
-            />
+            <defs>
+              <path id={`path-${i}`} d={path(d)} />
+              <clipPath id={`clip-${i}`}>
+                <use xlinkHref={`#path-${i}`} />
+              </clipPath>
+            </defs>
           ))}
 
           {features.map((d, i) => (
-            <path
-              key={`pattern-${i}`}
-              d={path(d)}
-              fill="url(#dLines)"
-              stroke="none"
-            />
+            <g>
+              <use xlinkHref={`#path-${i}`} fill={fill} />
+              <use
+                xlinkHref={`#path-${i}`}
+                fill="url(#dLines)"
+                stroke={stroke}
+                strokeWidth={1.5}
+              />
+              <use
+                xlinkHref={`#path-${i}`}
+                stroke={fill}
+                strokeWidth={4.5}
+                fill="url(#dLines)"
+                clipPath={`url(#clip-${i})`}
+              />
+            </g>
           ))}
-
-          <circle
-            r={(width - 2) / 2}
-            cx={width / 2}
-            cy={height / 2}
-            fill="none"
-            stroke={color}
-            strokeWidth={1}
-          />
 
           {data.map(function(d) {
             const coords = projection(d.geometry.coordinates).map(d =>
@@ -124,6 +143,7 @@ class Chart extends React.Component {
                 cx={coords[0]}
                 cy={coords[1]}
                 fill={colorScale(d.properties.name)}
+                fillOpacity={0.5}
               />
             );
           })}
