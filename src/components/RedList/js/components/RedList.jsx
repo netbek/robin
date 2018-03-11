@@ -45,6 +45,17 @@ class RedList extends React.Component {
   render() {
     return (
       <div>
+        <p>
+          Source:{' '}
+          <a
+            href="https://en.wikipedia.org/wiki/List_of_critically_endangered_birds"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Wikipedia
+          </a>
+        </p>
+
         <Chart {...{data, width, height, rotate, colorScale}} />
 
         <table className="table">
