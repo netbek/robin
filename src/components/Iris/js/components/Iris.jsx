@@ -90,7 +90,11 @@ class Iris extends React.Component {
       <div>
         <p>
           Based on{' '}
-          <a href="https://bl.ocks.org/mbostock/3887118" target="_blank">
+          <a
+            href="https://bl.ocks.org/mbostock/3887118"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             bl.ocks.org/mbostock/3887118
           </a>
         </p>
