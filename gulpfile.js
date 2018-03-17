@@ -1,31 +1,30 @@
-function resolve(filePath) {
+const path = require('path');
+const resolve = function(filePath) {
   return path.join(__dirname, filePath);
-}
-
-var path = require('path');
-var _ = require('lodash');
-var autoprefixer = require('autoprefixer');
-var buildModernizr = require(resolve('gulp/utils/buildModernizr'));
-var buildViewHtml = require(resolve('gulp/utils/buildViewHtml'));
-var concat = require('gulp-concat');
-var cssmin = require('gulp-cssmin');
-var fs = require('fs-extra');
-var gulp = require('gulp');
-var gulpPostcss = require('gulp-postcss');
-var gutil = require('gulp-util');
-var livereload = require('livereload');
-var nunjucks = require('nunjucks');
-var open = require('open');
-var os = require('os');
-var postcssColorRgbaFallback = require('postcss-color-rgba-fallback');
-var postcssOpacity = require('postcss-opacity');
-var Promise = require('bluebird');
-var rename = require('gulp-rename');
-var runSequence = require('run-sequence');
-var sass = require('gulp-sass');
-var webpack = require('webpack');
-var webpackDevServer = require('webpack-dev-server');
-var webserver = require('gulp-webserver');
+};
+const _ = require('lodash');
+const autoprefixer = require('autoprefixer');
+const buildModernizr = require(resolve('gulp/utils/buildModernizr'));
+const buildViewHtml = require(resolve('gulp/utils/buildViewHtml'));
+const concat = require('gulp-concat');
+const cssmin = require('gulp-cssmin');
+const fs = require('fs-extra');
+const gulp = require('gulp');
+const gulpPostcss = require('gulp-postcss');
+const gutil = require('gulp-util');
+const livereload = require('livereload');
+const nunjucks = require('nunjucks');
+const open = require('open');
+const os = require('os');
+const postcssColorRgbaFallback = require('postcss-color-rgba-fallback');
+const postcssOpacity = require('postcss-opacity');
+const Promise = require('bluebird');
+const rename = require('gulp-rename');
+const runSequence = require('run-sequence');
+const sass = require('gulp-sass');
+const webpack = require('webpack');
+const webpackDevServer = require('webpack-dev-server');
+const webserver = require('gulp-webserver');
 
 Promise.promisifyAll(fs);
 
@@ -40,11 +39,11 @@ fs.existsAsync = Promise.promisify(function exists2(path, exists2callback) {
  * Config
  ---------------------------------------------------------------------------- */
 
-var gulpConfig = require(resolve('gulp/config'));
+const gulpConfig = require(resolve('gulp/config'));
 
-var webpackConfig = require('./webpack.config');
+const webpackConfig = require('./webpack.config');
 
-var livereloadOpen =
+const livereloadOpen =
   (gulpConfig.webserver.https ? 'https' : 'http') +
   '://' +
   gulpConfig.webserver.host +
@@ -61,25 +60,25 @@ nunjucks.configure({
  ---------------------------------------------------------------------------- */
 
 // Parses `view` argument.
-var argv = require('yargs').option('vw', {
+const {argv} = require('yargs').option('vw', {
   alias: 'view',
-  default: 'HelloWorldView',
+  default: 'IrisView',
   type: 'string'
-}).argv;
+});
 
 /* -----------------------------------------------------------------------------
  * Misc
  ---------------------------------------------------------------------------- */
 
-var flags = {
+const flags = {
   livereloadInit: false // Whether `livereload-init` task has been run
 };
-var server;
-var viewModules = [];
+let server;
+let viewModules = [];
 
 // Choose browser for node-open.
-var browser = gulpConfig.webserver.browsers.default;
-var platform = os.platform();
+let browser = gulpConfig.webserver.browsers.default;
+const platform = os.platform();
 if (_.has(gulpConfig.webserver.browsers, platform)) {
   browser = gulpConfig.webserver.browsers[platform];
 }
@@ -138,7 +137,7 @@ function startWatch(files, tasks, livereload) {
   }
 
   gulp.watch(files, function() {
-    runSequence.apply(null, tasks);
+    runSequence(...tasks);
   });
 }
 
@@ -163,7 +162,7 @@ gulp.task('build-vendor', function() {
 
 // Start the webserver.
 gulp.task('webserver-init', function(cb) {
-  var config = _.clone(gulpConfig.webserver);
+  const config = _.clone(gulpConfig.webserver);
   config.open = false;
   // config.middleware = require(resolve());
 
@@ -190,8 +189,8 @@ gulp.task('livereload-reload', function(cb) {
 });
 
 gulp.task('watch:livereload', function() {
-  var livereloadTask = 'livereload-reload';
-  var watchTasks = [
+  const livereloadTask = 'livereload-reload';
+  const watchTasks = [
     // CSS
     {
       files: [
@@ -213,25 +212,25 @@ gulp.task('watch:livereload', function() {
   ];
 
   _.forEach(watchTasks, function(watchConfig) {
-    var tasks = _.clone(watchConfig.tasks);
+    const tasks = _.clone(watchConfig.tasks);
     tasks.push(livereloadTask);
     startWatch(watchConfig.files, tasks);
   });
 });
 
 // http://stackoverflow.com/a/30047862
-var CssPlugin = function() {};
+const CssPlugin = function() {};
 CssPlugin.prototype.apply = function(compiler) {
-  var loader = path.resolve('./node_modules/babel-loader/lib/index.js');
-  var loaderQuery = '?cacheDirectory!';
-  var componentLoader =
+  const loader = path.resolve('./node_modules/babel-loader/lib/index.js');
+  const loaderQuery = '?cacheDirectory!';
+  const componentLoader =
     loader + loaderQuery + path.resolve(gulpConfig.src.components) + '/';
-  var viewLoader =
+  const viewLoader =
     loader + loaderQuery + path.resolve(gulpConfig.src.views) + '/';
 
-  compiler.plugin('compilation', function(compilation, params) {
+  compiler.plugin('compilation', function(compilation) {
     compilation.plugin('after-optimize-chunk-assets', function(chunks) {
-      var modules = chunks.reduce(function(result, chunk) {
+      const modules = chunks.reduce(function(result, chunk) {
         return result.concat(
           chunk.mapModules(function(module) {
             return module.request;
@@ -239,18 +238,20 @@ CssPlugin.prototype.apply = function(compiler) {
         );
       }, []);
 
-      var nextViewModules = _.uniq(
+      const nextViewModules = _.uniq(
         modules
           .map(function(value) {
+            /* eslint array-callback-return: 0 */
+            /* eslint consistent-return: 0 */
             if (!value) {
               return;
             }
 
             if (~value.indexOf(componentLoader)) {
-              var parts = value.substring(componentLoader.length).split('/');
-              var dirname = _.first(parts);
-              var extname = path.extname(_.last(parts));
-              var basename = path.basename(_.last(parts), extname);
+              const parts = value.substring(componentLoader.length).split('/');
+              const dirname = _.first(parts);
+              const extname = path.extname(_.last(parts));
+              const basename = path.basename(_.last(parts), extname);
 
               return path.join(
                 gulpConfig.src.components,
@@ -261,7 +262,7 @@ CssPlugin.prototype.apply = function(compiler) {
             }
 
             if (~value.indexOf(viewLoader)) {
-              var viewName = value.substring(viewLoader.length).split('/')[0];
+              const viewName = value.substring(viewLoader.length).split('/')[0];
 
               return path.join(
                 gulpConfig.src.views,
@@ -294,10 +295,10 @@ CssPlugin.prototype.apply = function(compiler) {
 };
 
 gulp.task('webpack-dev-server', function(cb) {
-  var entryDir = path.join(gulpConfig.src.views, argv.view, 'js');
-  var entryFile = argv.view + '.jsx';
+  const entryDir = path.join(gulpConfig.src.views, argv.view, 'js');
+  const entryFile = argv.view + '.jsx';
 
-  var config = _.assign(_.clone(webpackConfig), {
+  const config = _.assign(_.clone(webpackConfig), {
     entry: {
       app: ['react-hot-loader/patch', './' + entryFile]
     },
@@ -310,10 +311,10 @@ gulp.task('webpack-dev-server', function(cb) {
 
   config.plugins = (config.plugins || []).concat([new CssPlugin()]);
 
-  var compiler = webpack(config);
+  const compiler = webpack(config);
 
   compiler.plugin('done', function(stats) {
-    var errors = stats.toJson().errors;
+    const {errors} = stats.toJson();
 
     if (errors && errors.length > 0) {
       return;

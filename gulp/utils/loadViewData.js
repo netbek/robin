@@ -1,12 +1,11 @@
-function resolve(filePath) {
+const path = require('path');
+const resolve = function(filePath) {
   return path.join(__dirname, '../../', filePath);
-}
-
-var path = require('path');
-var _ = require('lodash');
-var fs = require('fs-extra');
-var Promise = require('bluebird');
-var requireNoCache = require(resolve('gulp/utils/requireNoCache'));
+};
+const _ = require('lodash');
+const fs = require('fs-extra');
+const Promise = require('bluebird');
+const requireNoCache = require(resolve('gulp/utils/requireNoCache'));
 
 Promise.promisifyAll(fs);
 
@@ -17,15 +16,15 @@ fs.existsAsync = Promise.promisify(function exists2(path, exists2callback) {
   });
 });
 
-var gulpConfig = require(resolve('gulp/config'));
+const gulpConfig = require(resolve('gulp/config'));
 
-module.exports = function loadViewData(view) {
-  var dataFile = path.join(gulpConfig.src.views, view, 'data.js');
-  var dataDir = path.join(gulpConfig.src.views, view, 'data');
+module.exports = function(view) {
+  const dataFile = path.join(gulpConfig.src.views, view, 'data.js');
+  const dataDir = path.join(gulpConfig.src.views, view, 'data');
 
   return fs.existsAsync(dataFile).then(function(exists) {
     if (exists) {
-      var result = requireNoCache(resolve(dataFile));
+      const result = requireNoCache(resolve(dataFile));
 
       return Promise.resolve(result);
     }
@@ -36,22 +35,22 @@ module.exports = function loadViewData(view) {
           .readdirAsync(dataDir)
           .then(function(files) {
             return Promise.mapSeries(files, function(file) {
-              var extname = path.extname(file);
-              var basename = path.basename(file, extname);
-              var filePath = path.join(dataDir, file);
-              var result = [basename, requireNoCache(resolve(filePath))];
+              const extname = path.extname(file);
+              const basename = path.basename(file, extname);
+              const filePath = path.join(dataDir, file);
+              const result = [basename, requireNoCache(resolve(filePath))];
 
               return Promise.resolve(result);
             });
           })
           .then(function(data) {
-            var keys = data.map(function(d) {
+            const keys = data.map(function(d) {
               return d[0];
             });
-            var values = data.map(function(d) {
+            const values = data.map(function(d) {
               return d[1];
             });
-            var result = _.zipObject(keys, values);
+            const result = _.zipObject(keys, values);
 
             return Promise.resolve(result);
           });

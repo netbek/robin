@@ -1,3 +1,3 @@
-module.exports = function randomFloat(min, max) {
+module.exports = function(min, max) {
   return Math.random() * (max - min) + min;
 };

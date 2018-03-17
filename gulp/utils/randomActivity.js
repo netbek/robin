@@ -1,9 +1,9 @@
-var moment = require('moment');
-var randomInt = require('./randomInt');
+const moment = require('moment');
+const randomInt = require('./randomInt');
 
-module.exports = function randomActivity(year, min, max) {
-  var firstDay = moment([year]);
-  var daysInYear = firstDay.isLeapYear() ? 366 : 365;
+module.exports = function(year, min, max) {
+  const firstDay = moment([year]);
+  const daysInYear = firstDay.isLeapYear() ? 366 : 365;
 
   return Array(daysInYear)
     .fill()

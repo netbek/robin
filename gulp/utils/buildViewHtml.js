@@ -1,13 +1,12 @@
-function resolve(filePath) {
+const path = require('path');
+const resolve = function(filePath) {
   return path.join(__dirname, '../../', filePath);
-}
-
-var path = require('path');
-var _ = require('lodash');
-var fs = require('fs-extra');
-var loadViewData = require(resolve('gulp/utils/loadViewData'));
-var nunjucks = require('nunjucks');
-var Promise = require('bluebird');
+};
+const _ = require('lodash');
+const fs = require('fs-extra');
+const loadViewData = require(resolve('gulp/utils/loadViewData'));
+const nunjucks = require('nunjucks');
+const Promise = require('bluebird');
 
 Promise.promisifyAll(fs);
 
@@ -18,15 +17,15 @@ fs.existsAsync = Promise.promisify(function exists2(path, exists2callback) {
   });
 });
 
-var gulpConfig = require(resolve('gulp/config'));
+const gulpConfig = require(resolve('gulp/config'));
 
 nunjucks.configure({
   noCache: true
 });
 
-module.exports = function buildViewHtml(view) {
+module.exports = function(view) {
   loadViewData(view).then(function(data) {
-    var context = {
+    const context = {
       data: _.fromPairs(
         _.map(_.keys(data), function(key) {
           return [key, JSON.stringify(data[key])];
@@ -34,11 +33,11 @@ module.exports = function buildViewHtml(view) {
       )
     };
 
-    var srcPath = path.join(gulpConfig.src.views, view, 'index.njk');
-    var extname = path.extname(srcPath);
-    var basename = path.basename(srcPath, extname);
-    var distPath = path.join(gulpConfig.dist.base, basename + '.html');
-    var html = nunjucks.render(resolve(srcPath), context);
+    const srcPath = path.join(gulpConfig.src.views, view, 'index.njk');
+    const extname = path.extname(srcPath);
+    const basename = path.basename(srcPath, extname);
+    const distPath = path.join(gulpConfig.dist.base, basename + '.html');
+    const html = nunjucks.render(resolve(srcPath), context);
 
     return fs.outputFileAsync(resolve(distPath), html, 'utf-8');
   });

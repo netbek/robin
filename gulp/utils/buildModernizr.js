@@ -1,17 +1,16 @@
-function resolve(filePath) {
+const path = require('path');
+const resolve = function(filePath) {
   return path.join(__dirname, '../../', filePath);
-}
-
-var path = require('path');
-var fs = require('fs-extra');
-var modernizr = require('modernizr');
-var Promise = require('bluebird');
+};
+const fs = require('fs-extra');
+const modernizr = require('modernizr');
+const Promise = require('bluebird');
 
 Promise.promisifyAll(fs);
 
-var gulpConfig = require(resolve('gulp/config'));
+const gulpConfig = require(resolve('gulp/config'));
 
-module.exports = function buildModernizr(config) {
+module.exports = function(config) {
   return new Promise(function(resolve) {
     modernizr.build(config, function(result) {
       resolve(result);

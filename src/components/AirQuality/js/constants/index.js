@@ -1,4 +1,0 @@
-export const STATE_EMPTY = 'STATE_EMPTY';
-export const STATE_ERROR = 'STATE_ERROR';
-export const STATE_PROGRESS = 'STATE_PROGRESS';
-export const STATE_SUCCESS = 'STATE_SUCCESS';

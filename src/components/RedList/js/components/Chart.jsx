@@ -5,6 +5,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {geoGraticule, geoOrthographic, geoPath} from 'd3-geo';
+import {zoom} from 'd3-zoom';
 import {Orthographic} from '@vx/geo';
 import {PatternLines} from '@vx/pattern';
 import {merge as topojsonMerge} from 'topojson-client';
@@ -57,10 +58,15 @@ class Chart extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleWheel = this.handleWheel.bind(this);
+
     this.state = Chart.computeState(props);
   }
 
+  handleWheel(e) {}
+
   render() {
+    const {handleWheel} = this;
     const {width, height, center, rotate, colorScale} = this.props;
     const {data, scale, translate, projection, path} = this.state;
     const fill = '#fff';
@@ -68,7 +74,7 @@ class Chart extends React.Component {
 
     return (
       <div className="chart" style={{width, height}}>
-        <svg width={width} height={height}>
+        <svg width={width} height={height} onWheel={handleWheel}>
           <PatternLines
             id="dLines"
             height={4}

@@ -1,6 +1,6 @@
-var fs = require('fs-extra');
+const fs = require('fs-extra');
 
-module.exports = function requireNoCache(filePath, checkExists) {
+module.exports = function(filePath, checkExists = false) {
   if (checkExists && !fs.existsSync(filePath)) {
     return;
   }
