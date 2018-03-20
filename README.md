@@ -56,7 +56,7 @@ Plugins can be installed from the command line. To install a few useful ones:
 * [@fasouto/awesome-dataviz](https://github.com/fasouto/awesome-dataviz) - Awesome list of data visualisation libraries and resources.
 * [The Data Visualisation Catalogue](https://datavizcatalogue.com/) - List of data visualisation types.
 * [Data Viz Project](http://datavizproject.com/) - List of data visualisation types.
-* [The Python Graph Gallery](https://python-graph-gallery.com/) - List of data visualisation types in Python.
+* [The Python Graph Gallery](https://python-graph-gallery.com/) - List of data visualisation types in Matplotlib, Seaborn and other Python libraries.
 
 ### Development
 
@@ -127,9 +127,9 @@ TODO
 
 * [@wbkd/awesome-d3](https://github.com/wbkd/awesome-d3) - Awesome list of D3 libraries and plugins.
 * [data-ui](https://williaster.github.io/data-ui) - React framework on top of vx.
-* [Semiotic](https://emeeks.github.io/semiotic) - React framework.
-* [Victory](http://formidable.com/open-source/victory) - React library/framework.
-* [vx](https://vx-demo.now.sh) - Low-level React components.
+* [Semiotic](https://emeeks.github.io/semiotic) - Opinionated React framework.
+* [Victory](http://formidable.com/open-source/victory) - Opinionated but easily customisable React components.
+* [vx](https://vx-demo.now.sh) - Low-level React components that closely follow D3 conventions.
 
 ### React
 
