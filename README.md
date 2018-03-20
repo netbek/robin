@@ -42,73 +42,119 @@ Plugins can be installed from the command line. To install a few useful ones:
 
 ### Datasets
 
-* [@vincentarelbundock/Rdatasets](https://github.com/vincentarelbundock/Rdatasets)
-* [@awesomedata/awesome-public-datasets](https://github.com/awesomedata/awesome-public-datasets)
+* [@vincentarelbundock/Rdatasets](https://github.com/vincentarelbundock/Rdatasets) - Datasets that were originally distributed alongside R.
+* [@awesomedata/awesome-public-datasets](https://github.com/awesomedata/awesome-public-datasets) - Awesome list of public datasets.
 
-### Dataviz
+### Data visualisation
 
-* [@fasouto/awesome-dataviz](https://github.com/fasouto/awesome-dataviz)
-* [The Data Visualisation Catalogue](https://datavizcatalogue.com/)
-* [Data Viz Project](http://datavizproject.com/)
-* [The Python Graph Gallery](https://python-graph-gallery.com/)
+#### Getting started
 
-### HTML
+* [Fundamentals of Data Visualization - Claus O. Wilke](http://serialmentor.com/dataviz) - Beginner to advanced level.
 
-* [Can I use... HTML and CSS support table](https://caniuse.com)
-* [ECMAScript compatibility table](https://kangax.github.io/compat-table)
-* [HTML5 polyfills](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills)
+#### Further resources
+
+* [@fasouto/awesome-dataviz](https://github.com/fasouto/awesome-dataviz) - Awesome list of data visualisation libraries and resources.
+* [The Data Visualisation Catalogue](https://datavizcatalogue.com/) - List of data visualisation types.
+* [Data Viz Project](http://datavizproject.com/) - List of data visualisation types.
+* [The Python Graph Gallery](https://python-graph-gallery.com/) - List of data visualisation types in Python.
+
+### Development
+
+#### Getting started
+
+TODO
+
+#### Further resources
+
+* [Can I use... HTML and CSS support table](https://caniuse.com) - Browser support for HTML and CSS features.
+* [ECMAScript compatibility table](https://kangax.github.io/compat-table) - Browser support for JavaScript features.
+* [HTML5 polyfills](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills) - Shims, fallbacks and polyfills for HTML5 features.
 
 ### CSS and Sass
 
-#### Code style
+#### Learning CSS and Sass
 
-* [Airbnb CSS/Sass Styleguide](https://github.com/airbnb/css)
-* [Sass Guidelines](https://sass-guidelin.es/)
+TODO
 
 #### Further resources
 
-* [@Famolus/awesome-sass](https://github.com/Famolus/awesome-sass)
+* [@Famolus/awesome-sass](https://github.com/Famolus/awesome-sass) - Awesome list of frameworks, libraries and resources.
+* [Airbnb CSS/Sass Styleguide](https://github.com/airbnb/css) - Code style guide.
+* [Sass Guidelines](https://sass-guidelin.es/) - Code style guide.
 
 ### JavaScript
 
-#### Getting started
+#### Learning JavaScript
 
-* [Learning Core Javascript (ES5)](https://github.com/markerikson/react-redux-links#learning-core-javascript-es5)
-* [Learning Current Javascript (ES6+)](https://github.com/markerikson/react-redux-links#learning-current-javascript-es6)
-* [Learn JS Data](http://learnjsdata.com/) - Data cleaning, manipulation and wrangling
-* [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS#titles)
+* [Eloquent JavaScript - Marijn Haverbeke](http://eloquentjavascript.net) - Beginner to advanced level.
+* [You Don't Know JS - Kyle Simpson](https://github.com/getify/You-Dont-Know-JS#titles) - Intermediate to advanced level.
 
-#### Code style
+#### Libraries
 
-* [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+* [jQuery](http://api.jquery.com)
+* [Lodash](https://lodash.com/docs)
+* [Moment.js](https://momentjs.com/docs)
+* [Numeral.js](http://numeraljs.com)
+
+#### Working with data
+
+* [Learn JS Data](http://learnjsdata.com/) - Manipulating data with vanilla JavaScript, D3 and Lodash.
 
 #### Further resources
 
-* [@sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript)
-
-### D3
-
-* [@wbkd/awesome-d3](https://github.com/wbkd/awesome-d3)
-
-### React and Redux
-
-#### Getting started
-
-* [React docs](https://reactjs.org/docs)
-* [Redux docs](http://redux.js.org)
-* [@markerikson/react-redux-links](https://github.com/markerikson/react-redux-links)
-* [@vasanthk/react-bits](https://github.com/vasanthk/react-bits)
-
-#### Code style
-
-* [Airbnb React/JSX Style Guide](https://github.com/airbnb/javascript/tree/master/react)
-* [@ghengeveld/react-redux-styleguide](https://github.com/ghengeveld/react-redux-styleguide)
-* [Redux Best Practices - Kyle Poole](https://medium.com/@kylpo/redux-best-practices-eef55a20cc72)
-* [A Simple Naming Convention for Action Creators in Redux.js](https://decembersoft.com/posts/a-simple-naming-convention-for-action-creators-in-redux-js)
+* [@sorrycc/awesome-javascript](https://github.com/sorrycc/awesome-javascript) - Awesome list of browser-side JavaScript libraries, resources and shiny things.
+* [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) - Code style guide.
+* [Learning Core Javascript (ES5)](https://github.com/markerikson/react-redux-links#learning-core-javascript-es5) - Books and sites for learning JavaScript.
+* [Learning Current Javascript (ES6+)](https://github.com/markerikson/react-redux-links#learning-current-javascript-es6) - Books and sites for learning modern JavaScript features.
 
 ### SVG
 
+#### Learning SVG
+
 * [Pocket Guide to Writing SVG](http://svgpocketguide.com/)
+
+### D3
+
+#### Learning D3
+
+* [D3.js in Action, Second Edition - Elijah Meeks](https://www.manning.com/books/d3js-in-action-second-edition) - Beginner to advanced level.
+
+#### Learning D3 with React
+
+TODO
+
+#### Further resources
+
+* [@wbkd/awesome-d3](https://github.com/wbkd/awesome-d3) - Awesome list of D3 libraries and plugins.
+* [data-ui](https://williaster.github.io/data-ui) - React framework on top of vx.
+* [Semiotic](https://emeeks.github.io/semiotic) - React framework.
+* [Victory](http://formidable.com/open-source/victory) - React library/framework.
+* [vx](https://vx-demo.now.sh) - Low-level React components.
+
+### React
+
+#### Learning React
+
+* [React docs](https://reactjs.org/docs) - Official docs.
+* [@markerikson/react-redux-links](https://github.com/markerikson/react-redux-links) - Quality resources for learning React. Beginner to advanced level.
+* [@vasanthk/react-bits](https://github.com/vasanthk/react-bits) - React patterns. Intermediate to advanced level.
+
+#### Further resources
+
+* [Airbnb React/JSX Style Guide](https://github.com/airbnb/javascript/tree/master/react) - Code style guide.
+
+### Redux with React
+
+#### Learning Redux
+
+* [Redux docs](http://redux.js.org) - Official docs.
+* [@markerikson/react-redux-links](https://github.com/markerikson/react-redux-links) - Quality resources for learning React and Redux. Beginner to advanced level.
+
+#### Further resources
+
+* [@ghengeveld/react-redux-styleguide](https://github.com/ghengeveld/react-redux-styleguide) - Code style guide.
+* [Redux Best Practices - Kyle Poole](https://medium.com/@kylpo/redux-best-practices-eef55a20cc72) - Best practices in Redux.
+* [A Simple Naming Convention for Action Creators in Redux.js](https://decembersoft.com/posts/a-simple-naming-convention-for-action-creators-in-redux-js) - Naming conventions in Redux.
 
 ## License
 
