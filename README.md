@@ -50,6 +50,7 @@ Plugins can be installed from the command line. To install a few useful ones:
 #### Getting started
 
 * [Fundamentals of Data Visualization - Claus O. Wilke](http://serialmentor.com/dataviz) - Beginner to advanced level.
+* [IBM Design Language | Data Visualization](https://www.ibm.com/design/language/experience/data-visualization) - Good practices.
 
 #### Further resources
 
