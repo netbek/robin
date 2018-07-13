@@ -62,6 +62,7 @@ Plugins can be installed from the command line. To install a few useful ones:
 * [The R Graph Gallery](https://www.r-graph-gallery.com/) - List of visualisation types in ggplot2.
 * [Xenographics](https://xeno.graphics/) - List of unusual visualisations.
 * A few more: [1](https://twitter.com/jamesscottbrown/status/988123237900013569), [2](https://twitter.com/jamesscottbrown/status/988123321949741056), [3](https://twitter.com/jamesscottbrown/status/988123385111736321), [4](https://twitter.com/jamesscottbrown/status/988123441059463168), [5](https://twitter.com/jamesscottbrown/status/988125066931113984)
+* [dataviz.tools](http://dataviz.tools) - List of tools, resources and technologies for visualisation
 
 ### Development
 
