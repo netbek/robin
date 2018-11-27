@@ -36,7 +36,8 @@
     "samsung >= 5"
   ],
   "resolutions": {
-    "eslint-scope": "3.7.1"
+    "eslint-scope": "3.7.1",
+    "event-stream": "3.3.4"
   },
   "dependencies": {
     "@data-ui/data-table": "^0.0.48",
