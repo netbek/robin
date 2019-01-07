@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const {browserslist} = require('./package.json');
 
 module.exports = {
+  mode: 'development',
   entry: {
     app: ['react-hot-loader/patch', './RobinExampleView.jsx']
   },
