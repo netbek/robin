@@ -1,3 +1,4 @@
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 const {browserslist} = require('./package.json');
@@ -82,6 +83,12 @@ module.exports = {
   plugins: [
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new HardSourceWebpackPlugin({
+      cacheDirectory: path.resolve(
+        process.cwd(),
+        'node_modules/.cache/hard-source/[confighash]'
+      )
+    })
   ]
 };
