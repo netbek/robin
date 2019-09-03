@@ -1,7 +1,10 @@
-var path = require('path');
-var webpack = require('webpack');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const {browserslist} = require('./package.json');
 
 module.exports = {
+  mode: 'development',
   entry: {
     app: ['react-hot-loader/patch', './RobinExampleView.jsx']
   },
@@ -18,8 +21,47 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules\/(?!(react-redux-form))/, // Exclude dirs in node_modules except react-redux-form
-        loader: 'babel-loader?cacheDirectory'
+        loader: 'babel-loader?cacheDirectory',
+        options: {
+          babelrc: false,
+          comments: false,
+          env: {
+            development: {
+              plugins: [
+                'transform-object-assign',
+                ['transform-object-rest-spread', {useBuiltIns: false}],
+                'transform-remove-strict-mode'
+              ]
+            },
+            production: {
+              plugins: [
+                'transform-object-assign',
+                ['transform-object-rest-spread', {useBuiltIns: false}],
+                'transform-react-remove-prop-types',
+                'transform-remove-strict-mode'
+              ]
+            }
+          },
+          presets: [
+            [
+              'env',
+              {
+                exclude: [
+                  'transform-async-to-generator',
+                  'transform-regenerator'
+                ],
+                loose: true,
+                modules: 'commonjs',
+                targets: {
+                  browsers: browserslist
+                },
+                useBuiltIns: false
+              }
+            ],
+            'stage-2',
+            'react'
+          ]
+        }
       }
     ]
   },
@@ -41,6 +83,12 @@ module.exports = {
   plugins: [
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new HardSourceWebpackPlugin({
+      cacheDirectory: path.resolve(
+        process.cwd(),
+        'node_modules/.cache/hard-source/[confighash]'
+      )
+    })
   ]
 };

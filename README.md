@@ -50,14 +50,19 @@ Plugins can be installed from the command line. To install a few useful ones:
 #### Getting started
 
 * [Fundamentals of Data Visualization - Claus O. Wilke](http://serialmentor.com/dataviz) - Beginner to advanced level.
+* [Financial Times Visual Vocabulary](https://github.com/ft-interactive/chart-doctor/tree/master/visual-vocabulary) - Pick a visualisation type based on the data relationship that's most important.
 * [IBM Design Language | Data Visualization](https://www.ibm.com/design/language/experience/data-visualization) - Good practices.
 
 #### Further resources
 
-* [@fasouto/awesome-dataviz](https://github.com/fasouto/awesome-dataviz) - Awesome list of data visualisation libraries and resources.
-* [The Data Visualisation Catalogue](https://datavizcatalogue.com/) - List of data visualisation types.
-* [Data Viz Project](http://datavizproject.com/) - List of data visualisation types.
-* [The Python Graph Gallery](https://python-graph-gallery.com/) - List of data visualisation types in Matplotlib, Seaborn and other Python libraries.
+* [@fasouto/awesome-dataviz](https://github.com/fasouto/awesome-dataviz) - Awesome list of visualisation libraries and resources.
+* [The Data Visualisation Catalogue](https://datavizcatalogue.com/) - List of visualisation types.
+* [Data Viz Project](http://datavizproject.com/) - List of visualisation types.
+* [The Python Graph Gallery](https://python-graph-gallery.com/) - List of visualisation types in Matplotlib, Seaborn and other Python libraries.
+* [The R Graph Gallery](https://www.r-graph-gallery.com/) - List of visualisation types in ggplot2.
+* [Xenographics](https://xeno.graphics/) - List of unusual visualisations.
+* A few more: [1](https://twitter.com/jamesscottbrown/status/988123237900013569), [2](https://twitter.com/jamesscottbrown/status/988123321949741056), [3](https://twitter.com/jamesscottbrown/status/988123385111736321), [4](https://twitter.com/jamesscottbrown/status/988123441059463168), [5](https://twitter.com/jamesscottbrown/status/988125066931113984)
+* [dataviz.tools](http://dataviz.tools) - List of tools, resources and technologies for visualisation
 
 ### Development
 
