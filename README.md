@@ -6,7 +6,7 @@ Dataviz sandbox with D3, React, and R datasets.
 
 1. Install the dependencies:
 
-  ```
+  ```shell
   yarn install --pure-lockfile
   ```
 
@@ -16,7 +16,7 @@ Dataviz sandbox with D3, React, and R datasets.
 
 1. Build a view and open in a web browser:
 
-  ```
+  ```shell
   gulp --view [View]
   ```
 
@@ -34,7 +34,7 @@ Download from [atom.io](https://atom.io).
 
 Plugins can be installed from the command line. To install a few useful ones:
 
-  ```
+  ```shell
   apm install asciidoc-preview atom-jinja2 atom-mermaid atom-typescript chary-tree-view docblockr editorconfig git-control highlight-selected js-refactor language-asciidoc language-markdown language-mediawiki language-nunjucks linter linter-eslint linter-htmlhint linter-js-yaml linter-markdown linter-remark linter-sass-lint markdown-table-formatter minimap minimap-autohide minimap-git-diff prettier-atom@0.49.0 react refactor
   ```
 
