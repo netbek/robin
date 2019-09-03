@@ -7,7 +7,7 @@ Dataviz sandbox with D3, React, and R datasets.
 1. Install the dependencies:
 
   ```shell
-  yarn install --pure-lockfile
+  npm ci
   ```
 
 2. Install the [LiveReload extension for Chrome, Firefox, Safari](http://livereload.com/extensions).
