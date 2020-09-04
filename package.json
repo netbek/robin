@@ -159,7 +159,7 @@
     "numeral": "2.0.6",
     "nunjucks": "3.2.0",
     "open": "0.0.5",
-    "papaparse": "4.6.3",
+    "papaparse": "5.2.0",
     "pixrem": "4.0.1",
     "postcss": "6.0.23",
     "postcss-color-rgba-fallback": "3.0.0",
