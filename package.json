@@ -146,7 +146,7 @@
     "jshint": "2.10.2",
     "lint-staged": "6.1.1",
     "livereload": "0.8.0",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "lodash-3": "https://github.com/lodash/lodash/archive/3.10.1.tar.gz",
     "lorem-ipsum": "1.0.6",
     "mathsass": "0.11.0",
