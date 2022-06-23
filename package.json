@@ -142,7 +142,7 @@
     "gulp-webserver": "0.9.1",
     "husky": "0.14.3",
     "jquery": "3.4.1",
-    "jsdom": "11.12.0",
+    "jsdom": "16.5.0",
     "jshint": "2.10.2",
     "lint-staged": "6.1.1",
     "livereload": "0.8.0",
